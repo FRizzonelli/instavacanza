@@ -1,3 +1,9 @@
+import { GOOGLE_PHOTO_CATEGORY } from "../api/photos";
+
+export type FilterCriteria = {
+    favoriteCategory?: GOOGLE_PHOTO_CATEGORY;
+}
+
 export type Activity = {
     GpsPoints: any;
     LTSTags: any[];

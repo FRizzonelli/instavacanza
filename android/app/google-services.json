@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "200052756497",
+    "firebase_url": "https://instavacanza.firebaseio.com",
+    "project_id": "instavacanza",
+    "storage_bucket": "instavacanza.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200052756497:android:853293a8128a9d87",
+        "android_client_info": {
+          "package_name": "com.instavacanza"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "200052756497-hadjm1jpsrg8ajia00roumtk4gq46236.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.instavacanza",
+            "certificate_hash": "a1db2b896e1db31f7742afd53ee97912aa9764d2"
+          }
+        },
+        {
+          "client_id": "200052756497-gnsckp63ka5qq7hmb560c57jep8nggb2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYDXJ8k-DYF0l9VONvle25XX9xiw8k54Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "200052756497-gnsckp63ka5qq7hmb560c57jep8nggb2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "200052756497-o12nntsmb99iq5it4nttcbqjbbn48tdj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "it.bz.instavacanza"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

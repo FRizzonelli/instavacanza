@@ -73,7 +73,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    entryFile: "index.js"
+        entryFile: "index.js"
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -101,13 +101,23 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    signingConfigs {
+        release {
+            storeFile file("../keystores/instavacanza-release")
+            storePassword 'ZKZfmttm2u56q6KxX8Ez4ArvsAwrpw'
+            keyAlias 'instavacanza-alias'
+            keyPassword 'XGVcaCGv6LphsCPHQ9ZCQAgHpw8rgK'
+        }
+    }
+
     defaultConfig {
         applicationId "com.instavacanza"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        multiDexEnabled true
         missingDimensionStrategy "RNN.reactNativeVersion", "reactNative57_5" // See note below! 
         ndk {
-            abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
         }
         versionCode 1
         versionName "1.0"
@@ -131,7 +141,7 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2, "arm64-v8a": 3, "x86_64": 4]
+            def versionCodes = ["armeabi-v7a": 1, "x86": 2, "arm64-v8a": 3, "x86_64": 4]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -154,13 +164,17 @@ configurations.all {
 }
 
 dependencies {
-    implementation ("com.facebook.react:react-native:0.59.10") { force = true }
+    implementation("com.facebook.react:react-native:0.59.10") { force = true }
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation(project(':react-native-google-signin')) {
+        exclude group: "com.google.android.gms" // very important
+    }
     implementation project(':react-native-navigation')
     implementation project(':@react-native-community_async-storage')
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
 }
 
 // Run this once to be able to run the application with BUCK
@@ -169,3 +183,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+apply plugin: 'com.google.gms.google-services'

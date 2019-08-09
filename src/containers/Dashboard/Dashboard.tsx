@@ -18,20 +18,8 @@ export default class Dashboard extends Component<IDashboardProps> {
   render() {
     console.log(this.props.activities);
 
-    // const items = filter(this.props.activities, act => act.ImageGallery.length > 0);
-
     return (
       <View style={styles.root}>
-        {/* <Carousel
-          data={ENTRIES2}
-          renderItem={this._renderLightItem}
-          sliderWidth={sliderWidth}
-          itemWidth={itemWidth}
-          containerCustomStyle={styles.slider}
-          contentContainerCustomStyle={styles.sliderContentContainer}
-          layout="tinder"
-          loop={true}
-        /> */}
         {/* {DEMO.map((item, index) => (
             <Card key={index}>
               <CardItem

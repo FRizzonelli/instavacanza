@@ -3,6 +3,7 @@ package com.instavacanza;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.facebook.react.ReactNativeHost;
@@ -38,7 +39,8 @@ public class MainApplication extends NavigationApplication {
   protected List<ReactPackage> getPackages() {
     return Arrays.<ReactPackage>asList(
         new AsyncStoragePackage(),
-        new VectorIconsPackage()
+        new VectorIconsPackage(),
+        new RNGoogleSigninPackage()
     );
   }
 

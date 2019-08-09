@@ -1,0 +1,29 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'instavacanza' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for instavacanza
+  pod 'GoogleSignIn', '~> 4.4.0'
+
+  target 'instavacanzaTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
+
+target 'instavacanza-tvOS' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for instavacanza-tvOS
+
+  target 'instavacanza-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
