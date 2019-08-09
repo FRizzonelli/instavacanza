@@ -16,9 +16,7 @@ const store = configureStore() as Store<RootState>;
 
 const initIcons = async () => {
   return new Promise((resolve, reject) => {
-    Promise.all([
-      FeatherIcon.getImageSource('home', 24, '#fff')
-    ])
+    Promise.all([FeatherIcon.getImageSource('home', 24, '#fff')])
       .then(values => {
         IconStorage.saveImage('home', values[0]);
         resolve(true);
@@ -75,7 +73,7 @@ export const startApp = async () => {
 
     const state = await AsyncStorage.getItem('persist:instavacanza.root');
 
-    changeRootPath(Paths.LOGIN);
+    changeRootPath(Paths.HOME);
     // if (state) {
     //   changeRootPath(Paths.HOME);
     // } else {
@@ -108,7 +106,7 @@ const setAppRoot = (root: Paths) => {
   switch (root) {
     default:
       return;
-    case Paths.LOGIN:
+    case Paths.HOME:
       Navigation.setRoot({
         root: {
           stack: {
@@ -116,47 +114,7 @@ const setAppRoot = (root: Paths) => {
               {
                 component: {
                   name: ScreenKeys.loginScreen,
-                  options: {
-                    topBar: {
-                      drawBehind: false,
-                      elevation: 0,
-                      background: {
-                        color: Colors.FUSCHIA_500
-                      }
-                    },
-                    statusBar: {
-                      style: 'dark'
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        }
-      });
-      break;
-    case Paths.HOME:
-      Navigation.setRoot({
-        root: {
-          bottomTabs: {
-            children: [
-              {
-                stack: {
-                  children: [
-                    {
-                      component: {
-                        name: ScreenKeys.dashboardScreen,
-                        options: navigatorStandardOptions({
-                          title: 'Dashboard'
-                        })
-                      }
-                    }
-                  ],
-                  options: bottomTabStandardOptions({
-                    title: 'Dashboard',
-                    icon: 'home',
-                    selectedIcon: 'home'
-                  })
+                  options: navigatorStandardOptions({ title: 'Login' })
                 }
               }
             ]
