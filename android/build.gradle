@@ -3,15 +3,17 @@
 buildscript {
     ext {
         buildToolsVersion = "28.0.3"
-        minSdkVersion = 16
+        minSdkVersion = 19
         compileSdkVersion = 28
         targetSdkVersion = 28
         supportLibVersion = "28.0.0"
     }
     repositories {
+        mavenLocal()
+        mavenCentral()
         google()
         jcenter()
-    }
+    } 
     dependencies {
         classpath("com.android.tools.build:gradle:3.4.0")
 
@@ -20,11 +22,31 @@ buildscript {
     }
 }
 
+subprojects { subproject ->
+    afterEvaluate {
+        if ((subproject.plugins.hasPlugin('android') || subproject.plugins.hasPlugin('android-library'))) {
+            android {
+                targetSdkVersion = rootProject.ext.targetSdkVersion
+                compileSdkVersion = rootProject.ext.compileSdkVersion
+                buildToolsVersion = rootProject.ext.buildToolsVersion
+                variantFilter { variant ->
+                    def names = variant.flavors*.name
+                    if (names.contains("reactNative51") || names.contains("reactNative55") || names.contains("reactNative56") || names.contains("reactNative57")) {
+                        setIgnore(true)
+                    }
+                }
+            }
+        }
+    }
+}
+
 allprojects {
     repositories {
         mavenLocal()
+        mavenCentral()
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url "$rootDir/../node_modules/react-native/android"
