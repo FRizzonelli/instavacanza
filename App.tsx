@@ -1,17 +1,15 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import to from 'await-to-js';
-import moment from 'moment';
 import { Navigation } from 'react-native-navigation';
 // import FontAwesomePro, { FA5Style } from 'react-native-vector-icons/FontAwesome5Pro';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import { persistStore as persistStoreRaw } from 'redux-persist';
-import { Paths, RootPathActionTypeKeys } from './actions/rootPath';
-import { RootState } from './reducers';
-import registerScreens, { NavigationKeys, ScreenKeys } from './screens';
-import configureStore from './store/configureStore';
-import { Colors } from './styles/colors';
-import { navigatorStandardOptions, bottomTabStandardOptions } from './styles/navigator';
+import { Paths, RootPathActionTypeKeys } from './src/actions/rootPath';
+import { RootState } from './src/reducers';
+import registerScreens, { NavigationKeys, ScreenKeys } from './src/screens';
+import configureStore from './src/store/configureStore';
+import { Colors } from './src/styles/colors';
+import { navigatorStandardOptions, bottomTabStandardOptions } from './src/styles/navigator';
 
 const store = configureStore() as Store<RootState>;
 

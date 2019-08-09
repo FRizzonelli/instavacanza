@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { Store } from 'redux';
 // import { NotificationBox } from '../components/overlays/NotificationBox';
 import { RootState } from '../reducers';
-import { Dashboard } from '../containers/Dashboard';
+import { Dashboard } from '../components/containers/Dashboard';
 
 export enum ScreenKeys {
     dashboardScreen = 'it.bz.instavacanza.Dashboard',

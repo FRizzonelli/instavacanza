@@ -7,7 +7,7 @@ import {
   Text,
   StatusBar
 } from "react-native";
-import { Colors } from "./styles/colors";
+import { Colors } from "./src/styles/colors";
 
 const App = () => {
   return (

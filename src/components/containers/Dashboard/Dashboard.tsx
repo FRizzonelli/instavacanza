@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { ComponentEvent } from 'react-native-navigation';
-import { Colors } from '../../styles/colors';
+import { Colors } from '../../../styles/colors';
 
-export interface ILoginProps extends ComponentEvent {}
+export interface IDashboardProps extends ComponentEvent {}
 
-export default class Login extends Component<ILoginProps> {
+export default class Dashboard extends Component<IDashboardProps> {
   render() {
     return (
       <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
