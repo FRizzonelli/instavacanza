@@ -2,9 +2,6 @@ export enum Colors {
     /* White */
 
     WHITE = '#FFFFFF',
-    WHITE_TEXT = '#FFFFFFCC',
-    WHITE_OPACITY_BACKGROUND = '#FAFAFAA3',
-    OVERLAY_OPACITY = '#00000066',
 
     /* Gray */
 
@@ -17,14 +14,6 @@ export enum Colors {
     GRAY_500 = '#c7c7cc',
     GRAY_600 = '#8e8e93',
 
-    /* Blue */
-
-    PRIMARY_BLUE = '#0d97d5',
-    LIGHT_PRIMARY_BLUE = '#f4fbfe',
-    SECONDARY_BLUE = '#007ce4',
-    THIRD_BLUE = '#54a4da',
-    LIGHT_THIRD_BLUE = '#e5f0f9',
-
     /* Colors */
 
     BLUE_500 = '#0D97D5',
@@ -36,11 +25,4 @@ export enum Colors {
     FUSCHIA_500 = '#AD0DD5',
     PINK_500 = '#D50D99',
     CYAN_500 = '#0DD5AD',
-
-
-    LIGHT_GREEN = '#e7fdf7',
-    LIGHT_YELLOW = '#fff0c9',
-    LIGHT_RED = '#ffdfdd',
-    VIOLET = '#8d51e0',
-    LIGHT_VIOLET = '#E4DEF5'
 }
