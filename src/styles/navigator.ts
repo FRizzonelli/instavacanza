@@ -19,7 +19,7 @@ export const navigatorStandardOptions = <T>(opt: DicOptions<T>, leftButtons?: Op
     return {
         statusBar: {
             style: 'light',
-            drawBehind: true
+            drawBehind: false
         },
         // This is working but lib is bugged, https://github.com/wix/react-native-navigation/issues/5138
         topBar: {

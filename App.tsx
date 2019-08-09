@@ -39,9 +39,9 @@ const applyNavigationDefaultOptions = () => {
       orientation: ['portrait']
     },
     statusBar: {
-      backgroundColor: 'transparent',
+      backgroundColor: Colors.ORANGE_500,
       visible: true,
-      drawBehind: true, // Only on Android
+      drawBehind: false, // Only on Android
       style: 'light'
     },
     topBar: {
