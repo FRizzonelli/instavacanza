@@ -31,6 +31,9 @@ class Login extends Component<ILoginProps> {
             <TouchableOpacity
               onPress={() => {
                 this.props.changePath(Paths.HOME);
+                // Navigation.push(this.props.componentId, {
+
+                // })
               }}
             >
               <Text style={styles.sectionTitle}>Dashboard</Text>

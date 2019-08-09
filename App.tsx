@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { Navigation } from 'react-native-navigation';
-// import FontAwesomePro, { FA5Style } from 'react-native-vector-icons/FontAwesome5Pro';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import { persistStore as persistStoreRaw } from 'redux-persist';
@@ -10,47 +10,24 @@ import registerScreens, { NavigationKeys, ScreenKeys } from './src/screens';
 import configureStore from './src/store/configureStore';
 import { Colors } from './src/styles/colors';
 import { navigatorStandardOptions, bottomTabStandardOptions } from './src/styles/navigator';
+import IconStorage from './src/utils/icons/iconStorage';
 
 const store = configureStore() as Store<RootState>;
 
-// const initIcons = async () => {
-//   return new Promise((resolve, reject) => {
-//     Promise.all([
-//       require('../src/img/bottomTabs/dashboard-outline.png'),
-//       require('../src/img/bottomTabs/dashboard.png'),
-//       require('../src/img/bottomTabs/watch-outline.png'),
-//       require('../src/img/bottomTabs/watch.png'),
-//       require('../src/img/bottomTabs/expense-outline.png'),
-//       require('../src/img/bottomTabs/expense.png'),
-//       require('../src/img/bottomTabs/document-outline.png'),
-//       require('../src/img/bottomTabs/document.png'),
-//       FontAwesomePro.getImageSource('plus', 24, '#fff', FA5Style.light),
-//       FontAwesomePro.getImageSource('times', 24, '#fff', FA5Style.light),
-//       FontAwesomePro.getImageSource('ellipsis-v', 24, '#fff', FA5Style.light),
-//       FontAwesomePro.getImageSource('ellipsis-h', 24, '#fff', FA5Style.light),
-//       FontAwesomePro.getImageSource('search', 24, '#fff', FA5Style.light)
-//     ])
-//       .then(values => {
-//         IconStorage.saveImage('dashboard-outline', values[0]);
-//         IconStorage.saveImage('dashboard', values[1]);
-//         IconStorage.saveImage('watch-outline', values[2]);
-//         IconStorage.saveImage('watch', values[3]);
-//         IconStorage.saveImage('expense-outline', values[4]);
-//         IconStorage.saveImage('expense', values[5]);
-//         IconStorage.saveImage('document-outline', values[6]);
-//         IconStorage.saveImage('document', values[7]);
-//         IconStorage.saveImage('plus', values[8]);
-//         IconStorage.saveImage('cancel', values[9]);
-//         IconStorage.saveImage('more-vertical', values[10]);
-//         IconStorage.saveImage('more-horizontal', values[11]);
-//         IconStorage.saveImage('search', values[12]);
-//         resolve(true);
-//       })
-//       .catch(error => {
-//         reject(error);
-//       });
-//   });
-// };
+const initIcons = async () => {
+  return new Promise((resolve, reject) => {
+    Promise.all([
+      FeatherIcon.getImageSource('home', 24, '#fff')
+    ])
+      .then(values => {
+        IconStorage.saveImage('home', values[0]);
+        resolve(true);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
 
 const applyNavigationDefaultOptions = () => {
   Navigation.setDefaultOptions({
@@ -92,7 +69,7 @@ export const startApp = async () => {
     currentRoot = undefined;
 
     await persistStore(store);
-    // await initIcons();
+    await initIcons();
 
     applyNavigationDefaultOptions();
 
@@ -177,28 +154,11 @@ const setAppRoot = (root: Paths) => {
                   ],
                   options: bottomTabStandardOptions({
                     title: 'Dashboard',
-                    icon: 'dashboard-outline',
-                    selectedIcon: 'dashboard'
+                    icon: 'home',
+                    selectedIcon: 'home'
                   })
                 }
               }
-              // {
-              //   stack: {
-              //     children: [
-              //       {
-              //         component: {
-              //           name: ScreenKeys.timesheetScreen,
-              //           options: navigatorStandardOptions({ title: 'Presenze' })
-              //         }
-              //       }
-              //     ],
-              //     options: bottomTabStandardOptions({
-              //       title: 'Presenze',
-              //       icon: 'watch-outline',
-              //       selectedIcon: 'watch'
-              //     })
-              //   }
-              // }
             ]
           }
         }
