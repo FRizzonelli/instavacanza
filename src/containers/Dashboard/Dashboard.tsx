@@ -8,8 +8,11 @@ import { ENTRIES2, DEMO } from '../../models/staticEntries';
 import { sliderWidth, itemWidth } from '../../components/SliderEntry/SliderEntry';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 import { CardItem } from '../../components/CardItem';
+import { Activity } from '../../models/activity';
 
-export interface IDashboardProps extends ComponentEvent {}
+export interface IDashboardProps extends ComponentEvent {
+  activities: Activity[];
+}
 
 export default class Dashboard extends Component<IDashboardProps> {
   private swiper: any;

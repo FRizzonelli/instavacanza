@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import { PlatformTouchable } from '../../components/PlatformTouchable';
 import { ScreenKeys } from '../../screens';
 import { navigatorStandardOptions } from '../../styles/navigator';
+import { fetchActivities } from '../../api/activities';
+import to from 'await-to-js';
 
 export interface ILoginProps extends ComponentEvent {
   changePath: ChangePath;
@@ -19,18 +21,7 @@ class Login extends Component<ILoginProps> {
     return (
       <View style={styles.root}>
         <Text>Aiutaci a raccogliere i tuoi interessi 🙂</Text>
-        <PlatformTouchable
-          onPress={() => {
-            Navigation.push(this.props.componentId, {
-              component: {
-                name: ScreenKeys.dashboardScreen,
-                options: navigatorStandardOptions({
-                  title: 'Dashboard'
-                })
-              }
-            });
-          }}
-        >
+        <PlatformTouchable onPress={this.rerieveGoogleData}>
           <View style={styles.googleButton}>
             <Text>Login con Google</Text>
           </View>
@@ -38,6 +29,26 @@ class Login extends Component<ILoginProps> {
       </View>
     );
   }
+
+  private rerieveGoogleData = async () => {
+    // Mettere qui fetch a google
+
+    const [error, activities] = await to(fetchActivities());
+
+    if (activities) {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: ScreenKeys.dashboardScreen,
+          options: navigatorStandardOptions({
+            title: 'Dashboard'
+          }),
+          passProps: {
+            activities
+          }
+        }
+      });
+    }
+  };
 }
 
 const styles = StyleSheet.create({
