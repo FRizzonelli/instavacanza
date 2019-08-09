@@ -37,13 +37,15 @@ const applyNavigationDefaultOptions = () => {
       orientation: ['portrait']
     },
     statusBar: {
-      backgroundColor: Colors.ORANGE_500,
+      backgroundColor: 'transparent',
       visible: true,
-      drawBehind: false, // Only on Android
+      drawBehind: true, // Only on Android
       style: 'light'
     },
     topBar: {
-      noBorder: true
+      noBorder: true,
+      drawBehind: true,
+      visible: false
     }
   });
 };

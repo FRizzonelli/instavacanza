@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { ComponentEvent, Navigation } from 'react-native-navigation';
 import { changePath, Paths, ChangePath } from '../../actions/rootPath';
 import { Colors } from '../../styles/colors';
@@ -36,6 +36,18 @@ class Login extends Component<ILoginProps, IState> {
   }
 
   render() {
+    const { isLoadingPhotos, isMatchingODHWithGoogle } = this.state;
+    if (isLoadingPhotos) {
+      return (
+        <View style={styles.root}>
+          <ActivityIndicator color={Colors.WHITE} />
+          <Text>
+            {!isMatchingODHWithGoogle ? 'Downloading data from your Google Photos' : 'Crafting your next experience'}
+          </Text>
+        </View>
+      );
+    }
+
     return (
       <View style={styles.root}>
         <Text>Aiutaci a raccogliere i tuoi interessi 🙂</Text>
@@ -152,7 +164,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.WHITE
+    backgroundColor: Colors.FUSCHIA_500
   },
   googleButton: {
     paddingVertical: 16,
