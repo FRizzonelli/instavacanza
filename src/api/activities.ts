@@ -4,9 +4,9 @@ import to from "await-to-js";
 import { Activity, FilterCriteria } from "../models/activity";
 import { OdhResponse } from "../models/odhResponse";
 
-export async function fetchActivityById(id: number): Promise<Activity> {
+export async function fetchActivityById(id: string): Promise<Activity> {
     const [error, response] = await to(
-        fetchODHApi<Activity>(`${API_SERVER_URL}/api/Activity?pagesize=20`, {
+        fetchODHApi<Activity>(`${API_SERVER_URL}/api/Activity/${id}`, {
             method: 'GET'
         })
     );
@@ -44,8 +44,6 @@ export async function fetchActivitiesBy(filterCriteria: FilterCriteria): Promise
     if (!response) {
         throw error;
     }
-
-    debugger;
 
     return response;
 }

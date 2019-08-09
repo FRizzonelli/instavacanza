@@ -90,7 +90,9 @@ class Login extends Component<ILoginProps, IState> {
 
       const filterCriteria = mapWithAILogic(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
 
-      const activities = await fetchActivitiesBy(filterCriteria);
+      const activitiesId = await fetchActivitiesBy(filterCriteria);
+
+      console.log(activitiesId);
 
       Navigation.push(this.props.componentId, {
         component: {
@@ -99,7 +101,7 @@ class Login extends Component<ILoginProps, IState> {
             title: 'Dashboard'
           }),
           passProps: {
-            activities
+            activitiesId
           }
         }
       });

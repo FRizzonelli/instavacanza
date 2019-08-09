@@ -1,8 +1,9 @@
-import { Platform, Dimensions, Image, StyleSheet, TouchableOpacity, Text, View } from 'react-native';
+import { Platform, Dimensions, Image, StyleSheet, TouchableOpacity, Text, View, ActivityIndicator } from 'react-native';
 import React, { Component } from 'react';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { Colors } from '../../styles/colors';
 import { Activity } from '../../models/activity';
+import { fetchActivityById } from '../../api/activities';
 
 const IS_IOS = Platform.OS === 'ios';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
@@ -22,32 +23,41 @@ export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 const entryBorderRadius = 8;
 
 export interface ICardItemProps {
-  activity?: Activity;
+  activityId?: string;
   actions: any;
-  description: string;
-  image: any;
+  description?: string;
+  image?: any;
   matches: any;
-  name: string;
+  name?: string;
   onPressLeft: () => void;
   onPressRight: () => void;
-  status: any;
-  variant: any;
+  variant?: any;
 }
 
-export default class CardItem extends Component<any> {
+interface IState {
+  activity?: Activity;
+}
+
+export default class CardItem extends Component<ICardItemProps, IState> {
+  constructor(props: ICardItemProps) {
+    super(props);
+
+    this.state = {};
+  }
+
+  async componentDidMount() {
+    if (this.props.activityId) {
+      const activity = await fetchActivityById(this.props.activityId);
+      this.setState({
+        activity
+      });
+    }
+  }
+
   render() {
-    const {
-      activity,
-      actions,
-      description,
-      image,
-      matches,
-      name,
-      onPressLeft,
-      onPressRight,
-      status,
-      variant
-    } = this.props;
+    const { activityId, actions, description, image, matches, name, onPressLeft, onPressRight, variant } = this.props;
+
+    const { activity } = this.state;
 
     // Custom styling
     const fullWidth = Dimensions.get('window').width;
@@ -68,6 +78,78 @@ export default class CardItem extends Component<any> {
         fontSize: variant ? 15 : 30
       }
     ];
+
+    if (activityId && !activity) {
+      return (
+        <View style={styles.containerCardItem}>
+          <View style={[imageStyle, { justifyContent: 'center', alignItems: 'center' }]}>
+            <ActivityIndicator color={Colors.FUSCHIA_500} />
+          </View>
+          {actions && (
+            <View style={styles.actionsCardItem}>
+              <TouchableOpacity style={styles.miniButton}>
+                <FeatherIcon name="star" />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.button} onPress={() => onPressLeft()}>
+                <FeatherIcon name="thumbs-up" />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.button} onPress={() => onPressRight()}>
+                <FeatherIcon name="thumbs-down" />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.miniButton}>
+                <FeatherIcon name="zap" />
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+      );
+    } else if (activity) {
+      return (
+        <View style={styles.containerCardItem}>
+          {/* IMAGE */}
+          <Image
+            source={
+              activity.ImageGallery.length > 0 ? activity.ImageGallery[0].ImageUrl : require('../../images/01.jpg')
+            }
+            style={imageStyle}
+          />
+
+          {/* NAME */}
+          <Text style={nameStyle}>{activity.Shortname || 'Titolo'}</Text>
+
+          {/* DESCRIPTION */}
+          {description && (
+            <Text style={styles.descriptionCardItem}>
+              {activity.Detail.length > 0 ? activity.Detail[0].Title : 'Test'}
+            </Text>
+          )}
+
+          {/* ACTIONS */}
+          {actions && (
+            <View style={styles.actionsCardItem}>
+              <TouchableOpacity style={styles.miniButton}>
+                <FeatherIcon name="star" />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.button} onPress={() => onPressLeft()}>
+                <FeatherIcon name="thumbs-up" />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.button} onPress={() => onPressRight()}>
+                <FeatherIcon name="thumbs-down" />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.miniButton}>
+                <FeatherIcon name="zap" />
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+      );
+    }
 
     return (
       <View style={styles.containerCardItem}>
