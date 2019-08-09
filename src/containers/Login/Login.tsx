@@ -14,6 +14,7 @@ import to from 'await-to-js';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 import { fetchAlbums, fetchAllPhotos } from '../../api/photos';
 import { mapWithAILogic } from '../../ai/photosToOdhMapper';
+import LinearGradient from 'react-native-linear-gradient';
 
 export interface ILoginProps extends ComponentEvent {
   changePath: ChangePath;
@@ -39,18 +40,18 @@ class Login extends Component<ILoginProps, IState> {
     const { isLoadingPhotos, isMatchingODHWithGoogle } = this.state;
     if (isLoadingPhotos) {
       return (
-        <View style={styles.root}>
+        <LinearGradient colors={['#44357F', '#3C5A99']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.root}>
           <ActivityIndicator color={Colors.WHITE} />
-          <Text>
+          <Text style={{ color: Colors.WHITE }}>
             {!isMatchingODHWithGoogle ? 'Downloading data from your Google Photos' : 'Crafting your next experience'}
           </Text>
-        </View>
+        </LinearGradient>
       );
     }
 
     return (
-      <View style={styles.root}>
-        <Text>Aiutaci a raccogliere i tuoi interessi 🙂</Text>
+      <LinearGradient colors={['#44357F', '#3C5A99']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.root}>
+        <Text style={{ color: Colors.WHITE }}>Aiutaci a raccogliere i tuoi interessi 🙂</Text>
         <GoogleSigninButton
           style={{ width: 192, height: 48, marginTop: 18 }}
           size={GoogleSigninButton.Size.Wide}
@@ -58,7 +59,7 @@ class Login extends Component<ILoginProps, IState> {
           onPress={this.signIn}
           disabled={this.state.isSigninInProgress}
         />
-      </View>
+      </LinearGradient>
     );
   }
 
@@ -104,8 +105,6 @@ class Login extends Component<ILoginProps, IState> {
 
       const activitiesId = await fetchActivitiesBy(filterCriteria);
 
-      console.log(activitiesId);
-
       Navigation.push(this.props.componentId, {
         component: {
           name: ScreenKeys.dashboardScreen,
@@ -116,6 +115,12 @@ class Login extends Component<ILoginProps, IState> {
             activitiesId
           }
         }
+      });
+
+      this.setState({
+        isSigninInProgress: false,
+        isLoadingPhotos: false,
+        isMatchingODHWithGoogle: false
       });
     } catch (error) {
       console.log(error);
@@ -163,8 +168,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.FUSCHIA_500
+    justifyContent: 'center'
   },
   googleButton: {
     paddingVertical: 16,

@@ -40,6 +40,7 @@
 		1814B4A722FDC08500BB0D52 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1814B49722FDC08500BB0D52 /* SimpleLineIcons.ttf */; };
 		1814B4A822FDC08500BB0D52 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1814B49822FDC08500BB0D52 /* MaterialIcons.ttf */; };
 		188171B522FE00E700299773 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1881718922FE00E700299773 /* GoogleService-Info.plist */; };
+		18DCF1D322FE2DAF00B92F5A /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DCF1A522FE2D9400B92F5A /* libBVLinearGradient.a */; };
 		18EA924E22FDB2EB0007E451 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EA924B22FDB2C00007E451 /* libReactNativeNavigation.a */; };
 		1D736BDA22284E258E1FFE84 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4E7D93B6C23D4EEEBD937E02 /* FontAwesome5_Solid.ttf */; };
 		21111E3CEA1970F0C7DE2F2B /* libPods-instavacanza-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AD926590ABFB2CA534E3FBA /* libPods-instavacanza-tvOSTests.a */; };
@@ -175,6 +176,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 9FD355121D3E4A2900D06170;
 			remoteInfo = RNGoogleSignin;
+		};
+		18DCF1A422FE2D9400B92F5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 18DCF19F22FE2D9400B92F5A /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = BVLinearGradient;
+		};
+		18DCF1A622FE2D9400B92F5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 18DCF19F22FE2D9400B92F5A /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 64AA15081EF7F30100718508;
+			remoteInfo = "BVLinearGradient-tvOS";
 		};
 		18EA924022FDB2C00007E451 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -442,6 +457,7 @@
 		1814B49822FDC08500BB0D52 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		185F1DDF64DDCA1266216025 /* Pods-instavacanza-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instavacanza-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-instavacanza-tvOSTests/Pods-instavacanza-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		1881718922FE00E700299773 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		18DCF19F22FE2D9400B92F5A /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		18EA921822FDB2C00007E451 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		1ECD0B9E391E49BABAC26FFC /* RNCAsyncStorage.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCAsyncStorage.xcodeproj; path = "../node_modules/@react-native-community/async-storage/ios/RNCAsyncStorage.xcodeproj"; sourceTree = "<group>"; };
 		2AD926590ABFB2CA534E3FBA /* libPods-instavacanza-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-instavacanza-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -500,6 +516,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18DCF1D322FE2DAF00B92F5A /* libBVLinearGradient.a in Frameworks */,
 				18EA924E22FDB2EB0007E451 /* libReactNativeNavigation.a in Frameworks */,
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
@@ -727,6 +744,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		18DCF1A022FE2D9400B92F5A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				18DCF1A522FE2D9400B92F5A /* libBVLinearGradient.a */,
+				18DCF1A722FE2D9400B92F5A /* libBVLinearGradient.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		18EA921922FDB2C00007E451 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -795,6 +821,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				18DCF19F22FE2D9400B92F5A /* BVLinearGradient.xcodeproj */,
 				18EA921822FDB2C00007E451 /* ReactNativeNavigation.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -997,6 +1024,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 18DCF1A022FE2D9400B92F5A /* Products */;
+					ProjectRef = 18DCF19F22FE2D9400B92F5A /* BVLinearGradient.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
@@ -1154,6 +1185,20 @@
 			fileType = archive.ar;
 			path = libRNGoogleSignin.a;
 			remoteRef = 1881712622FDFB6600299773 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		18DCF1A522FE2D9400B92F5A /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = 18DCF1A422FE2D9400B92F5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		18DCF1A722FE2D9400B92F5A /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = 18DCF1A622FE2D9400B92F5A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		18EA924122FDB2C00007E451 /* libjsi.a */ = {

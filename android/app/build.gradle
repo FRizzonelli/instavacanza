@@ -166,6 +166,7 @@ configurations.all {
 dependencies {
     implementation("com.facebook.react:react-native:0.59.10") { force = true }
     implementation 'com.android.support:multidex:1.0.3'
+    implementation project(':react-native-linear-gradient')
     implementation(project(':react-native-google-signin')) {
         exclude group: "com.google.android.gms" // very important
     }

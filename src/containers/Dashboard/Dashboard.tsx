@@ -7,6 +7,7 @@ import { DEMO } from '../../models/staticEntries';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 import { CardItem } from '../../components/CardItem';
 import { Activity } from '../../models/activity';
+import LinearGradient from 'react-native-linear-gradient';
 
 export interface IDashboardProps extends ComponentEvent {
   activities?: Activity[];
@@ -18,7 +19,7 @@ export default class Dashboard extends Component<IDashboardProps> {
 
   render() {
     return (
-      <View style={styles.root}>
+      <LinearGradient colors={['#44357F', '#3C5A99']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.root}>
         <CardStack
           loop={false}
           verticalSwipe={true}
@@ -31,11 +32,6 @@ export default class Dashboard extends Component<IDashboardProps> {
                 <Card key={index}>
                   <CardItem
                     activityId={item.Id}
-                    // image={
-                    //   item.ImageGallery.length > 0 ? item.ImageGallery[0].ImageUrl : require('../../images/01.jpg')
-                    // }
-                    // name={item.Shortname || 'short'}
-                    // description={item.Detail.length > 0 ? item.Detail[0].Title : 'Test'}
                     matches={false}
                     actions
                     onPressLeft={() => this.swiper.swipeLeft()}
@@ -45,7 +41,7 @@ export default class Dashboard extends Component<IDashboardProps> {
               );
             })}
         </CardStack>
-      </View>
+      </LinearGradient>
     );
   }
 }
@@ -53,7 +49,9 @@ export default class Dashboard extends Component<IDashboardProps> {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: Colors.WHITE
+    backgroundColor: Colors.WHITE,
+    paddingTop: 80,
+    paddingHorizontal: 16
   },
   slider: {
     marginTop: 15,
