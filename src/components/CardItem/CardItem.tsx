@@ -2,6 +2,7 @@ import { Platform, Dimensions, Image, StyleSheet, TouchableOpacity, Text, View }
 import React, { Component } from 'react';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { Colors } from '../../styles/colors';
+import { Activity } from '../../models/activity';
 
 const IS_IOS = Platform.OS === 'ios';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
@@ -21,6 +22,7 @@ export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 const entryBorderRadius = 8;
 
 export interface ICardItemProps {
+  activity?: Activity;
   actions: any;
   description: string;
   image: any;
@@ -34,7 +36,18 @@ export interface ICardItemProps {
 
 export default class CardItem extends Component<any> {
   render() {
-    const { actions, description, image, matches, name, onPressLeft, onPressRight, status, variant } = this.props;
+    const {
+      activity,
+      actions,
+      description,
+      image,
+      matches,
+      name,
+      onPressLeft,
+      onPressRight,
+      status,
+      variant
+    } = this.props;
 
     // Custom styling
     const fullWidth = Dimensions.get('window').width;

@@ -6,7 +6,7 @@ import { OdhResponse } from "../models/odhResponse";
 
 export async function fetchActivities(): Promise<Activity[]> {
     const [error, response] = await to(
-        fetchODHApi<OdhResponse<Activity>>(`${API_SERVER_URL}/api/Activity?pagesize=200`, {
+        fetchODHApi<OdhResponse<Activity>>(`${API_SERVER_URL}/api/Activity?pagesize=20`, {
             method: 'GET'
         })
     );
