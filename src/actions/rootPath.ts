@@ -20,6 +20,7 @@ export type RootPathState = {
     readonly name?: Paths;
 };
 
+export type ChangePath = typeof changePath;
 export const changePath: ActionCreator<IRootPathChanged> = (path: Paths) => {
     return {
         type: RootPathActionTypeKeys.ROOT_CHANGED,

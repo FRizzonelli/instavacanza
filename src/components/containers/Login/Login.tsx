@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet } from 'react-native';
-import { ComponentEvent } from 'react-native-navigation';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { ComponentEvent, Navigation } from 'react-native-navigation';
+import { changePath, Paths, ChangePath } from '../../../actions/rootPath';
 import { Colors } from '../../../styles/colors';
+import { RootState } from '../../../reducers';
+import { Dispatch, bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-export interface ILoginProps extends ComponentEvent {}
+export interface ILoginProps extends ComponentEvent {
+  changePath: ChangePath;
+}
 
-export default class Login extends Component<ILoginProps> {
+class Login extends Component<ILoginProps> {
   render() {
     return (
       <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
@@ -22,8 +28,13 @@ export default class Login extends Component<ILoginProps> {
             <Text style={styles.sectionDescription}>{/* <ReloadInstructions /> */}</Text>
           </View>
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}>Debug</Text>
-            <Text style={styles.sectionDescription}>{/* <DebugInstructions /> */}</Text>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.changePath(Paths.HOME);
+              }}
+            >
+              <Text style={styles.sectionTitle}>Dashboard</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionTitle}>Learn More</Text>
@@ -73,3 +84,23 @@ const styles = StyleSheet.create({
     textAlign: 'right'
   }
 });
+
+function mapStateToProps(state: RootState) {
+  return {};
+}
+
+function mapDispatchToProps(dispatch: Dispatch) {
+  return bindActionCreators(
+    {
+      changePath
+    },
+    dispatch
+  );
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  null,
+  { forwardRef: true }
+)(Login);

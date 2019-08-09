@@ -98,12 +98,12 @@ export const startApp = async () => {
 
     const state = await AsyncStorage.getItem('persist:instavacanza.root');
 
-    if (state) {
-      changeRootPath(Paths.HOME);
-      return;
-    } else {
-      changeRootPath(Paths.LOGIN);
-    }
+    changeRootPath(Paths.LOGIN);
+    // if (state) {
+    //   changeRootPath(Paths.HOME);
+    // } else {
+    //   changeRootPath(Paths.LOGIN);
+    // }
   });
 };
 

@@ -4,6 +4,7 @@ import { Store } from 'redux';
 // import { NotificationBox } from '../components/overlays/NotificationBox';
 import { RootState } from '../reducers';
 import { Dashboard } from '../components/containers/Dashboard';
+import { Login } from '../components/containers/Login';
 
 export enum ScreenKeys {
     dashboardScreen = 'it.bz.instavacanza.Dashboard',
@@ -20,7 +21,7 @@ export enum NavigationKeys {
 export default (store: Store<RootState | undefined>, provider: typeof Provider) => {
     // Screens
     Navigation.registerComponentWithRedux(ScreenKeys.dashboardScreen, () => Dashboard, Provider, store);
-    Navigation.registerComponentWithRedux(ScreenKeys.loginScreen, () => Dashboard, Provider, store);
+    Navigation.registerComponentWithRedux(ScreenKeys.loginScreen, () => Login, Provider, store);
     // Overlay
     // Navigation.registerComponent(OverlayKeys.notificationOverlay, () => NotificationBox);
     // Navigation
