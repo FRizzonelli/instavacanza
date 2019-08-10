@@ -13,7 +13,7 @@ import {
   Platform
 } from 'react-native';
 import { ComponentEvent, Navigation } from 'react-native-navigation';
-import { changePath, Paths, ChangePath, CachePhotos, cachePhotos } from '../../actions/rootPath';
+import { changePath, Paths, ChangePath, CachePhotos, cachePhotos, ClearCachePhotos, clearCachePhotos } from '../../actions/rootPath';
 import { Colors } from '../../styles/colors';
 import { RootState } from '../../reducers';
 import { Dispatch, bindActionCreators } from 'redux';
@@ -58,18 +58,6 @@ class VacationTime extends Component<IVacationTimeProps, IState> {
       isMatchingODHWithGoogle: false,
       pickedTime: 'tomorrow'
     };
-  }
-
-  async componentDidMount() {
-    const { gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos } = this.props.cachedPhotos;
-
-    // if (gardensPhotos) {
-    //   this.setState({
-    //     isLoadingPhotos: true
-    //   });
-
-    //   await this.retrieveODHData(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
-    // }
   }
 
   render() {
@@ -170,19 +158,26 @@ class VacationTime extends Component<IVacationTimeProps, IState> {
         isLoadingPhotos: true
       });
 
-      await GoogleSignin.signInSilently();
+      // Already fetched
+      if (this.props.cachedPhotos.gardensPhotos) {
+        const { gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos } = this.props.cachedPhotos;
 
-      const tokens = await GoogleSignin.getTokens();
+        await this.retrieveODHData(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
+      } else {
+        await GoogleSignin.signInSilently();
 
-      const gardensPhotos = await fetchAllPhotos(tokens.accessToken, 'GARDENS');
-      const holidaysPhotos = await fetchAllPhotos(tokens.accessToken, 'HOLIDAYS');
-      const landscapesPhotos = await fetchAllPhotos(tokens.accessToken, 'LANDSCAPES');
-      const sportPhotos = await fetchAllPhotos(tokens.accessToken, 'SPORT');
-      const travelPhotos = await fetchAllPhotos(tokens.accessToken, 'TRAVEL');
+        const tokens = await GoogleSignin.getTokens();
 
-      this.props.cachePhotos(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
+        const gardensPhotos = await fetchAllPhotos(tokens.accessToken, 'GARDENS');
+        const holidaysPhotos = await fetchAllPhotos(tokens.accessToken, 'HOLIDAYS');
+        const landscapesPhotos = await fetchAllPhotos(tokens.accessToken, 'LANDSCAPES');
+        const sportPhotos = await fetchAllPhotos(tokens.accessToken, 'SPORT');
+        const travelPhotos = await fetchAllPhotos(tokens.accessToken, 'TRAVEL');
 
-      await this.retrieveODHData(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
+        this.props.cachePhotos(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
+
+        await this.retrieveODHData(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
+      }
     } catch (error) {
       console.log(error);
 

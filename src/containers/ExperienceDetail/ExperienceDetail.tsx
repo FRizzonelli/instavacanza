@@ -1,6 +1,6 @@
 import { filter } from 'lodash';
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, Text, Image, TextInput, Platform } from 'react-native';
+import { View, StyleSheet, FlatList, Text, Image, TextInput, Platform, ScrollView } from 'react-native';
 import { ComponentEvent, Navigation } from 'react-native-navigation';
 import { Colors } from '../../styles/colors';
 import FeatherIcon from 'react-native-vector-icons/Feather';
@@ -41,7 +41,7 @@ export default class ExperienceDetail extends Component<IExperienceDetailProps, 
       : '';
 
     return (
-      <View style={styles.root}>
+      <ScrollView style={styles.root} showsVerticalScrollIndicator={false}>
         <Text style={{ fontSize: 34, color: '#44357F', marginTop: 40 }}>{title}</Text>
         {!!address && (
           <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 4 }}>
@@ -108,7 +108,7 @@ export default class ExperienceDetail extends Component<IExperienceDetailProps, 
             </View>
           </PlatformTouchable>
         )}
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     marginTop: Platform.select({ android: 40, ios: 60 }),
+    paddingBottom: 20,
     paddingHorizontal: 24,
     backgroundColor: Colors.WHITE
   },

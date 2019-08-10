@@ -24,6 +24,17 @@ function rootPath(state: RootPathState = initialState, action: RootPathActionTyp
                 ...state,
                 cachedPhotos: action.payload
             }
+        case RootPathActionTypeKeys.CLEAR_CACHED_PHOTOS:
+            return {
+                ...state,
+                cachedPhotos: {
+                    gardensPhotos: undefined,
+                    holidaysPhotos: undefined,
+                    landscapesPhotos: undefined,
+                    sportPhotos: undefined,
+                    travelPhotos: undefined
+                }
+            }
         default:
             return state;
     }

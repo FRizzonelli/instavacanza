@@ -130,6 +130,10 @@ class Login extends Component<ILoginProps, IState> {
           })
         }
       });
+
+      this.setState({
+        isSigninInProgress: false
+      });
     } catch (error) {
       console.log(error);
 

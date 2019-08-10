@@ -1,4 +1,4 @@
-import { filter } from 'lodash';
+import { debounce } from 'lodash';
 import React, { Component } from 'react';
 import { View, StyleSheet, Platform, BackHandler, NativeEventSubscription } from 'react-native';
 import { ComponentEvent, Navigation } from 'react-native-navigation';
@@ -9,18 +9,26 @@ import { CardItem } from '../../components/CardItem';
 import { Activity } from '../../models/activity';
 import LinearGradient from 'react-native-linear-gradient';
 import { ScreenKeys } from '../../screens';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import { navigatorStandardOptions } from '../../styles/navigator';
+import { PlatformTouchable } from '../../components/PlatformTouchable';
+import { GoogleSignin } from 'react-native-google-signin';
+import { ClearCachePhotos, clearCachePhotos } from '../../actions/rootPath';
+import { RootState } from '../../reducers';
+import { Dispatch, bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 export interface IDashboardProps extends ComponentEvent {
   activities?: Activity[];
   activitiesId?: { Id: string; Name: string }[];
+  clearCachePhotos: ClearCachePhotos;
 }
 
 interface IState {
   matchedActivityIds: string[];
 }
 
-export default class Dashboard extends Component<IDashboardProps, IState> {
+class Dashboard extends Component<IDashboardProps, IState> {
   private swiper: any;
   private backButtonSubscription?: NativeEventSubscription;
 
@@ -48,6 +56,12 @@ export default class Dashboard extends Component<IDashboardProps, IState> {
   render() {
     return (
       <LinearGradient colors={['#44357F', '#3C5A99']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.root}>
+        <PlatformTouchable
+          onPress={debounce(this.logout, 500, { leading: true, trailing: false })}
+          style={{ position: 'absolute', top: 40, right: 16 }}
+        >
+          <FeatherIcon name="log-out" size={22} color={Colors.WHITE} />
+        </PlatformTouchable>
         <CardStack
           loop={false}
           verticalSwipe={true}
@@ -74,6 +88,14 @@ export default class Dashboard extends Component<IDashboardProps, IState> {
       </LinearGradient>
     );
   }
+
+  private logout = async () => {
+    await GoogleSignin.signOut();
+
+    this.props.clearCachePhotos();
+    
+    Navigation.popToRoot(this.props.componentId);
+  };
 
   private onSwipedLeft = (index: number) => {};
 
@@ -119,3 +141,23 @@ const styles = StyleSheet.create({
     paddingVertical: 10 // for custom animation
   }
 });
+
+function mapStateToProps(state: RootState) {
+  return {};
+}
+
+function mapDispatchToProps(dispatch: Dispatch) {
+  return bindActionCreators(
+    {
+      clearCachePhotos
+    },
+    dispatch
+  );
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  null,
+  { forwardRef: true }
+)(Dashboard);
