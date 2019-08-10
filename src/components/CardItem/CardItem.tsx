@@ -33,6 +33,7 @@ export interface ICardItemProps {
   name?: string;
   onPressLeft: () => void;
   onPressRight: () => void;
+  onPressSuperLike: () => void;
   variant?: any;
 }
 
@@ -57,7 +58,7 @@ export default class CardItem extends Component<ICardItemProps, IState> {
   }
 
   render() {
-    const { activityId, actions, description, image, matches, name, onPressLeft, onPressRight, variant } = this.props;
+    const { activityId, actions, description, image, matches, name, onPressLeft, onPressRight, onPressSuperLike, variant } = this.props;
 
     const { activity } = this.state;
 
@@ -124,14 +125,21 @@ export default class CardItem extends Component<ICardItemProps, IState> {
           {actions && (
             <View style={styles.actionsCardItem}>
               <TouchableOpacity
-                style={[styles.button, { backgroundColor: '#EB5757' }]}
+                style={[styles.button, { backgroundColor: '#EB5757', marginTop: 14 }]}
                 onPress={debounce(onPressLeft, 500, { leading: true, trailing: false })}
               >
                 <FeatherIcon name="thumbs-down" size={18} color={Colors.WHITE} />
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={[styles.button, { backgroundColor: '#27AE60' }]}
+                style={[styles.bigButton, { backgroundColor: Colors.BLUE_500 }]}
+                onPress={debounce(onPressSuperLike, 500, { leading: true, trailing: false })}
+              >
+                <FeatherIcon name="star" size={20} color={Colors.WHITE} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: '#27AE60', marginTop: 14 }]}
                 onPress={debounce(onPressRight, 500, { leading: true, trailing: false })}
               >
                 <FeatherIcon name="thumbs-up" size={18} color={Colors.WHITE} />
@@ -232,6 +240,21 @@ const styles = StyleSheet.create({
     marginHorizontal: 7,
     alignItems: 'center',
     justifyContent: 'center',
+    elevation: 3,
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    shadowColor: Colors.GRAY_500,
+    shadowOffset: { height: 10, width: 0 }
+  },
+  bigButton: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: '#44357F',
+    marginHorizontal: 7,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 3,
     shadowOpacity: 0.15,
     shadowRadius: 20,
     shadowColor: Colors.GRAY_500,

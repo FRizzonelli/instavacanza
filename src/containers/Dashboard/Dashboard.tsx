@@ -17,9 +17,10 @@ import { ClearCachePhotos, clearCachePhotos } from '../../actions/rootPath';
 import { RootState } from '../../reducers';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { truncateString } from '../../utils/strUtils';
+import { fetchActivityById } from '../../api/activities';
 
 export interface IDashboardProps extends ComponentEvent {
-  activities?: Activity[];
   activitiesId?: { Id: string; Name: string }[];
   clearCachePhotos: ClearCachePhotos;
 }
@@ -68,6 +69,7 @@ class Dashboard extends Component<IDashboardProps, IState> {
           renderNoMoreCards={() => null}
           onSwipedLeft={this.onSwipedLeft}
           onSwipedRight={this.onSwipedRight}
+          onSwipedTop={this.onSwipedTop}
           ref={swiper => (this.swiper = swiper)}
         >
           {this.props.activitiesId &&
@@ -80,6 +82,7 @@ class Dashboard extends Component<IDashboardProps, IState> {
                     actions
                     onPressLeft={() => this.swiper.swipeLeft()}
                     onPressRight={() => this.swiper.swipeRight()}
+                    onPressSuperLike={() => this.swiper.swipeTop()}
                   />
                 </Card>
               );
@@ -93,11 +96,29 @@ class Dashboard extends Component<IDashboardProps, IState> {
     await GoogleSignin.signOut();
 
     this.props.clearCachePhotos();
-    
+
     Navigation.popToRoot(this.props.componentId);
   };
 
   private onSwipedLeft = (index: number) => {};
+
+  private onSwipedTop = async (index: number) => {
+    const activity = await fetchActivityById(this.props.activitiesId![index].Id);
+    const title = activity.Detail.en ? activity.Detail.en.Title : activity.Shortname || 'Title not available';
+
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: ScreenKeys.experienceDetailScreen,
+        options: navigatorStandardOptions({
+          title: truncateString(title, 20),
+          visible: true
+        }),
+        passProps: {
+          activity
+        }
+      }
+    });
+  };
 
   private onSwipedRight = (index: number) => {
     const updatedMatchedActivites = [...this.state.matchedActivityIds, this.props.activitiesId![index].Id];

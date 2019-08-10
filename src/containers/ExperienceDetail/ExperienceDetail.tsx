@@ -1,6 +1,17 @@
 import { filter } from 'lodash';
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, Text, Image, TextInput, Platform, ScrollView } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  Text,
+  Image,
+  TextInput,
+  Platform,
+  ScrollView,
+  BackHandler,
+  NativeEventSubscription
+} from 'react-native';
 import { ComponentEvent, Navigation } from 'react-native-navigation';
 import { Colors } from '../../styles/colors';
 import FeatherIcon from 'react-native-vector-icons/Feather';
@@ -23,10 +34,27 @@ export interface IExperienceDetailProps extends ComponentEvent {
 interface IState {}
 
 export default class ExperienceDetail extends Component<IExperienceDetailProps, IState> {
+  private backButtonSubscription?: NativeEventSubscription;
+
   constructor(props: IExperienceDetailProps) {
     super(props);
     this.state = {};
   }
+
+  componentDidMount() {
+    this.backButtonSubscription = BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  componentWillUnmount() {
+    if (this.backButtonSubscription) {
+      this.backButtonSubscription.remove();
+    }
+  }
+
+  handleBackButton = () => {
+    Navigation.pop(this.props.componentId);
+    return true;
+  };
 
   render() {
     const { activity } = this.props;

@@ -8,6 +8,7 @@ declare module 'react-native-card-stack-swiper' {
         renderNoMoreCards?: () => any;
         onSwipedLeft: (index: number) => void;
         onSwipedRight: (index: number) => void;
+        onSwipedTop: (index: number) => void;
         ref?: (ref: any) => void;
     }
 
