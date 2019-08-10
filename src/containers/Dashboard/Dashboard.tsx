@@ -85,7 +85,7 @@ export default class Dashboard extends Component<IDashboardProps, IState> {
         matchedActivityIds: updatedMatchedActivites
       },
       () => {
-        if (updatedMatchedActivites.length >= 3) {
+        if (updatedMatchedActivites.length % 3 === 0) {
           Navigation.push(this.props.componentId, {
             component: {
               name: ScreenKeys.yourExperiencesScreen,

@@ -8,6 +8,7 @@ import com.BV.LinearGradient.LinearGradientPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.airbnb.android.react.lottie.LottiePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -44,7 +45,8 @@ public class MainApplication extends NavigationApplication {
         new VectorIconsPackage(),
         new RNGoogleSigninPackage(),
         new LinearGradientPackage(),
-        new MapsPackage()
+        new MapsPackage(),
+        new LottiePackage()
     );
   }
 

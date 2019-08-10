@@ -29,6 +29,7 @@ import { mapWithAILogic } from '../../ai/photosToOdhMapper';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import { MediaItem } from '../../models/mediaItem';
+import LottieView from 'lottie-react-native';
 
 export interface IVacationTimeProps extends ComponentEvent {
   cachedPhotos: {
@@ -75,9 +76,14 @@ class VacationTime extends Component<IVacationTimeProps, IState> {
 
     if (isLoadingPhotos) {
       return (
-        <LinearGradient colors={['#44357F', '#3C5A99']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.root}>
-          <ActivityIndicator color={Colors.WHITE} />
-          <Text style={{ color: Colors.WHITE }}>
+        <LinearGradient
+          colors={['#44357F', '#3C5A99']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
+          style={styles.rootLoader}
+        >
+          <LottieView source={require('../../images/animation.json')} autoPlay loop />
+          <Text style={{ fontSize: 22, color: Colors.WHITE, marginTop: 220 }}>
             {!isMatchingODHWithGoogle ? 'Learning from your Photos...' : 'Crafting your next experience...'}
           </Text>
         </LinearGradient>
@@ -90,7 +96,7 @@ class VacationTime extends Component<IVacationTimeProps, IState> {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Picker
             selectedValue={this.state.pickedTime}
-            style={{ height: 30, width: 200 }}
+            style={{ height: 38, width: 200 }}
             itemStyle={{ color: Colors.WHITE, fontSize: 20 }}
             onValueChange={itemValue => this.setState({ pickedTime: itemValue })}
           >
@@ -99,7 +105,7 @@ class VacationTime extends Component<IVacationTimeProps, IState> {
             <Picker.Item label="next week" value="nextWeek" />
             <Picker.Item label="next month" value="nextMonth" />
           </Picker>
-          <FeatherIcon name="chevron-down" size={20} color={Colors.WHITE} style={{ marginTop: 12 }} />
+          <FeatherIcon name="chevron-down" size={20} color={Colors.WHITE} style={{ marginTop: 10 }} />
         </View>
 
         <PlatformTouchable
@@ -126,6 +132,8 @@ class VacationTime extends Component<IVacationTimeProps, IState> {
       this.setState({
         isLoadingPhotos: true
       });
+
+      await GoogleSignin.signInSilently();
 
       const tokens = await GoogleSignin.getTokens();
 
@@ -199,9 +207,13 @@ class VacationTime extends Component<IVacationTimeProps, IState> {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    // alignItems: 'center',
     paddingHorizontal: 38,
     justifyContent: 'center'
+  },
+  rootLoader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   googleButton: {
     paddingVertical: 16,
