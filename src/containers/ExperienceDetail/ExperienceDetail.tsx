@@ -62,22 +62,36 @@ export default class ExperienceDetail extends Component<IExperienceDetailProps, 
             width: '100%'
           }}
         />
-        <PlatformTouchable style={{ width: '100%', marginTop: 12 }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: 40,
-              borderRadius: 8,
-              borderWidth: 1,
-              borderColor: Colors.BLACK
+        {!!activity.GpsPoints.position && (
+          <PlatformTouchable
+            style={{ width: '100%', marginTop: 12 }}
+            onPress={() => {
+              Navigation.showModal({
+                component: {
+                  name: ScreenKeys.mapOverlayScreen,
+                  passProps: {
+                    activity
+                  }
+                }
+              });
             }}
           >
-            <FeatherIcon name="map" size={16} color={Colors.BLACK} />
-            <Text style={{ fontSize: 16, color: Colors.BLACK, paddingHorizontal: 4 }}>Open Maps</Text>
-          </View>
-        </PlatformTouchable>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 40,
+                borderRadius: 8,
+                borderWidth: 1,
+                borderColor: Colors.BLACK
+              }}
+            >
+              <FeatherIcon name="map" size={16} color={Colors.BLACK} />
+              <Text style={{ fontSize: 16, color: Colors.BLACK, paddingHorizontal: 4 }}>Open Maps</Text>
+            </View>
+          </PlatformTouchable>
+        )}
       </View>
     );
   }

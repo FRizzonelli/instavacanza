@@ -7,6 +7,8 @@ target 'instavacanza' do
 
   # Pods for instavacanza
   pod 'GoogleSignIn', '~> 4.4.0'
+  pod 'GoogleMaps'
+  pod 'Google-Maps-iOS-Utils'
 
   target 'instavacanzaTests' do
     inherit! :search_paths

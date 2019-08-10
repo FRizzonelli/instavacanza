@@ -164,6 +164,7 @@ configurations.all {
 }
 
 dependencies {
+    implementation project(':react-native-maps')
     implementation("com.facebook.react:react-native:0.59.10") { force = true }
     implementation 'com.android.support:multidex:1.0.3'
     implementation project(':react-native-linear-gradient')

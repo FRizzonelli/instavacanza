@@ -3,6 +3,7 @@ package com.instavacanza;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -42,7 +43,8 @@ public class MainApplication extends NavigationApplication {
         new AsyncStoragePackage(),
         new VectorIconsPackage(),
         new RNGoogleSigninPackage(),
-        new LinearGradientPackage()
+        new LinearGradientPackage(),
+        new MapsPackage()
     );
   }
 

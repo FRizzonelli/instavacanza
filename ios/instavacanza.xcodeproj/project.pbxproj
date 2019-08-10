@@ -39,6 +39,7 @@
 		1814B4A622FDC08500BB0D52 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1814B49622FDC08500BB0D52 /* EvilIcons.ttf */; };
 		1814B4A722FDC08500BB0D52 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1814B49722FDC08500BB0D52 /* SimpleLineIcons.ttf */; };
 		1814B4A822FDC08500BB0D52 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1814B49822FDC08500BB0D52 /* MaterialIcons.ttf */; };
+		1862E80822FE86760072F0E4 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1862E7DA22FE86690072F0E4 /* libAirMaps.a */; };
 		188171B522FE00E700299773 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1881718922FE00E700299773 /* GoogleService-Info.plist */; };
 		18DCF1D322FE2DAF00B92F5A /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DCF1A522FE2D9400B92F5A /* libBVLinearGradient.a */; };
 		18EA924E22FDB2EB0007E451 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EA924B22FDB2C00007E451 /* libReactNativeNavigation.a */; };
@@ -169,6 +170,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = A39873CE1EA65EE60051E01A;
 			remoteInfo = "RNVectorIcons-tvOS";
+		};
+		1862E7D922FE86690072F0E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1862E7D522FE86690072F0E4 /* AirMaps.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
+			remoteInfo = AirMaps;
 		};
 		1881712622FDFB6600299773 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -456,6 +464,7 @@
 		1814B49722FDC08500BB0D52 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		1814B49822FDC08500BB0D52 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		185F1DDF64DDCA1266216025 /* Pods-instavacanza-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instavacanza-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-instavacanza-tvOSTests/Pods-instavacanza-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		1862E7D522FE86690072F0E4 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		1881718922FE00E700299773 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18DCF19F22FE2D9400B92F5A /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		18EA921822FDB2C00007E451 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
@@ -516,6 +525,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1862E80822FE86760072F0E4 /* libAirMaps.a in Frameworks */,
 				18DCF1D322FE2DAF00B92F5A /* libBVLinearGradient.a in Frameworks */,
 				18EA924E22FDB2EB0007E451 /* libReactNativeNavigation.a in Frameworks */,
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
@@ -736,6 +746,14 @@
 			path = "../node_modules/react-native-vector-icons/Fonts";
 			sourceTree = "<group>";
 		};
+		1862E7D622FE86690072F0E4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1862E7DA22FE86690072F0E4 /* libAirMaps.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		1881712322FDFB6600299773 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -821,6 +839,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				1862E7D522FE86690072F0E4 /* AirMaps.xcodeproj */,
 				18DCF19F22FE2D9400B92F5A /* BVLinearGradient.xcodeproj */,
 				18EA921822FDB2C00007E451 /* ReactNativeNavigation.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -1024,6 +1043,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 1862E7D622FE86690072F0E4 /* Products */;
+					ProjectRef = 1862E7D522FE86690072F0E4 /* AirMaps.xcodeproj */;
+				},
+				{
 					ProductGroup = 18DCF1A022FE2D9400B92F5A /* Products */;
 					ProjectRef = 18DCF19F22FE2D9400B92F5A /* BVLinearGradient.xcodeproj */;
 				},
@@ -1178,6 +1201,13 @@
 			fileType = archive.ar;
 			path = "libRNVectorIcons-tvOS.a";
 			remoteRef = 1814B40722FDBF6B00BB0D52 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1862E7DA22FE86690072F0E4 /* libAirMaps.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAirMaps.a;
+			remoteRef = 1862E7D922FE86690072F0E4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		1881712722FDFB6600299773 /* libRNGoogleSignin.a */ = {
@@ -1569,12 +1599,14 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-instavacanza/Pods-instavacanza-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
