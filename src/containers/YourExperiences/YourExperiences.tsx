@@ -13,6 +13,7 @@ import { ScreenKeys } from '../../screens';
 import { navigatorStandardOptions } from '../../styles/navigator';
 import { fetchActivities, fetchActivityById } from '../../api/activities';
 import { retrieveRandomPlaceholder } from '../../ai/photosToOdhMapper';
+import { PlatformTouchable } from '../../components/PlatformTouchable';
 
 export interface IYourExperiencesProps extends ComponentEvent {
   matchedActivityIds: string[];
@@ -70,7 +71,23 @@ export default class YourExperiences extends Component<IYourExperiencesProps, IS
       : '';
 
     return (
-      <View style={styles.experienceCardContainer}>
+      <PlatformTouchable
+        style={styles.experienceCardContainer}
+        onPress={() => {
+          Navigation.push(this.props.componentId, {
+            component: {
+              name: ScreenKeys.experienceDetailScreen,
+              options: navigatorStandardOptions({
+                title: this.truncateString(title, 20),
+                visible: true
+              }),
+              passProps: {
+                activity
+              }
+            }
+          });
+        }}
+      >
         <Image
           source={
             activity.ImageGallery.length > 0
@@ -95,9 +112,17 @@ export default class YourExperiences extends Component<IYourExperiencesProps, IS
             </View>
           )}
         </View>
-      </View>
+      </PlatformTouchable>
     );
   };
+
+  truncateString(str: string, size: number) {
+    if (str.length > size) {
+      return str.slice(0, size) + '...';
+    } else {
+      return str;
+    }
+  }
 }
 
 const styles = StyleSheet.create({

@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import { AnimationOptions, Options, OptionsTopBarButton } from 'react-native-navigation';
+import { AnimationOptions, Options, OptionsTopBarButton, OptionsCustomTransition } from 'react-native-navigation';
 import IconStorage from '../utils/icons/iconStorage';
 import { NavigatorButtonIds } from '../utils/navigation';
 import { Colors } from './colors';
@@ -13,7 +13,8 @@ export type DicOptions<T = {}> = {
         alignment?: 'center' | 'fill';
         passProps?: T;
     };
-    animations?: AnimationOptions
+    animations?: AnimationOptions;
+    customTransition?: OptionsCustomTransition;
 };
 
 export const navigatorStandardOptions = <T>(opt: DicOptions<T>, leftButtons?: OptionsTopBarButton[], rightButtons?: OptionsTopBarButton[]): Options => {
@@ -40,7 +41,8 @@ export const navigatorStandardOptions = <T>(opt: DicOptions<T>, leftButtons?: Op
             leftButtons,
             rightButtons
         },
-        animations: opt.animations
+        animations: opt.animations,
+        customTransition: opt.customTransition
     };
 };
 
