@@ -1,3 +1,4 @@
+import find from 'lodash';
 import { Platform, Dimensions, Image, StyleSheet, TouchableOpacity, Text, View, ActivityIndicator } from 'react-native';
 import React, { Component } from 'react';
 import FeatherIcon from 'react-native-vector-icons/Feather';
@@ -64,18 +65,20 @@ export default class CardItem extends Component<ICardItemProps, IState> {
     const imageStyle = [
       {
         borderRadius: 8,
-        width: variant ? fullWidth / 2 - 30 : fullWidth - 80,
-        height: variant ? 170 : 350,
-        margin: variant ? 0 : 20
+        width: fullWidth - 48,
+        height: 250,
+        paddingBottom: 20
       }
     ];
 
     const nameStyle = [
       {
-        paddingTop: variant ? 10 : 15,
-        paddingBottom: variant ? 5 : 7,
+        paddingTop: 15,
+        paddingBottom: 7,
+        paddingHorizontal: 16,
         color: '#363636',
-        fontSize: variant ? 15 : 30
+        fontWeight: '700',
+        fontSize: 22
       }
     ];
 
@@ -87,26 +90,22 @@ export default class CardItem extends Component<ICardItemProps, IState> {
           </View>
           {actions && (
             <View style={styles.actionsCardItem}>
-              <TouchableOpacity style={styles.miniButton}>
-                <FeatherIcon name="star" />
-              </TouchableOpacity>
-
               <TouchableOpacity style={styles.button} onPress={() => onPressLeft()}>
-                <FeatherIcon name="thumbs-up" />
+                <FeatherIcon name="thumbs-down" size={18} color={Colors.WHITE} />
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.button} onPress={() => onPressRight()}>
-                <FeatherIcon name="thumbs-down" />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.miniButton}>
-                <FeatherIcon name="zap" />
+                <FeatherIcon name="thumbs-up" size={18} color={Colors.WHITE} />
               </TouchableOpacity>
             </View>
           )}
         </View>
       );
     } else if (activity) {
+      const title = activity.Detail.en ? activity.Detail.en.Title : activity.Shortname || 'Title not available';
+      const description =
+        activity.Detail.en && activity.Detail.en.BaseText ? activity.Detail.en.BaseText.replace(/<[^>]*>?/gm, '') : '';
+
       return (
         <View style={styles.containerCardItem}>
           {/* IMAGE */}
@@ -118,32 +117,26 @@ export default class CardItem extends Component<ICardItemProps, IState> {
           />
 
           {/* NAME */}
-          <Text style={nameStyle}>{activity.Shortname || 'Titolo'}</Text>
+          <Text style={nameStyle} ellipsizeMode="tail" numberOfLines={2}>
+            {title}
+          </Text>
 
           {/* DESCRIPTION */}
-          {description && (
-            <Text style={styles.descriptionCardItem}>
-              {activity.Detail.length > 0 ? activity.Detail[0].Title : 'Test'}
+          {!!description && (
+            <Text style={styles.descriptionCardItem} ellipsizeMode="tail" numberOfLines={3}>
+              {description}
             </Text>
           )}
 
           {/* ACTIONS */}
           {actions && (
             <View style={styles.actionsCardItem}>
-              <TouchableOpacity style={styles.miniButton}>
-                <FeatherIcon name="star" />
-              </TouchableOpacity>
-
               <TouchableOpacity style={styles.button} onPress={() => onPressLeft()}>
-                <FeatherIcon name="thumbs-up" />
+                <FeatherIcon name="thumbs-down" size={18} color={Colors.WHITE} />
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.button} onPress={() => onPressRight()}>
-                <FeatherIcon name="thumbs-down" />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.miniButton}>
-                <FeatherIcon name="zap" />
+                <FeatherIcon name="thumbs-up" size={18} color={Colors.WHITE} />
               </TouchableOpacity>
             </View>
           )}
@@ -187,11 +180,11 @@ export default class CardItem extends Component<ICardItemProps, IState> {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button} onPress={() => onPressLeft()}>
-              <FeatherIcon name="thumbs-up" />
+              <FeatherIcon name="thumbs-down" />
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button} onPress={() => onPressRight()}>
-              <FeatherIcon name="thumbs-down" />
+              <FeatherIcon name="thumbs-up" />
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.miniButton}>
@@ -208,27 +201,35 @@ const styles = StyleSheet.create({
   containerCardItem: {
     backgroundColor: Colors.WHITE,
     borderRadius: 8,
-    alignItems: 'center',
     margin: 10,
+    height: Dimensions.get('window').height - 180,
     shadowOpacity: 0.05,
     shadowRadius: 10,
+    elevation: 5,
     shadowColor: Colors.BLACK,
     shadowOffset: { height: 0, width: 0 }
   },
   descriptionCardItem: {
-    color: Colors.GRAY_200,
-    textAlign: 'center'
+    color: Colors.GRAY_600,
+    paddingHorizontal: 16,
+    fontSize: 17
+    // textAlign: 'center'
   },
   actionsCardItem: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
     flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 40,
     paddingVertical: 30
   },
   button: {
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: Colors.WHITE,
+    backgroundColor: '#44357F',
     marginHorizontal: 7,
     alignItems: 'center',
     justifyContent: 'center',

@@ -1,7 +1,8 @@
+import { delay } from 'lodash';
 import React, { Component } from 'react';
 import { ScrollView, View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { ComponentEvent, Navigation } from 'react-native-navigation';
-import { changePath, Paths, ChangePath } from '../../actions/rootPath';
+import { changePath, Paths, ChangePath, CachePhotos, cachePhotos } from '../../actions/rootPath';
 import { Colors } from '../../styles/colors';
 import { RootState } from '../../reducers';
 import { Dispatch, bindActionCreators } from 'redux';
@@ -15,9 +16,18 @@ import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-goog
 import { fetchAlbums, fetchAllPhotos } from '../../api/photos';
 import { mapWithAILogic } from '../../ai/photosToOdhMapper';
 import LinearGradient from 'react-native-linear-gradient';
+import { MediaItem } from '../../models/mediaItem';
 
 export interface ILoginProps extends ComponentEvent {
+  cachedPhotos: {
+    gardensPhotos?: any;
+    holidaysPhotos?: any;
+    landscapesPhotos?: any;
+    sportPhotos?: any;
+    travelPhotos?: any;
+  };
   changePath: ChangePath;
+  cachePhotos: CachePhotos;
 }
 
 interface IState {
@@ -36,8 +46,21 @@ class Login extends Component<ILoginProps, IState> {
     };
   }
 
+  async componentDidMount() {
+    const { gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos } = this.props.cachedPhotos;
+
+    if (gardensPhotos) {
+      this.setState({
+        isLoadingPhotos: true
+      });
+
+      await this.retrieveODHData(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
+    }
+  }
+
   render() {
     const { isLoadingPhotos, isMatchingODHWithGoogle } = this.state;
+
     if (isLoadingPhotos) {
       return (
         <LinearGradient colors={['#44357F', '#3C5A99']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.root}>
@@ -97,31 +120,9 @@ class Login extends Component<ILoginProps, IState> {
       const sportPhotos = await fetchAllPhotos(tokens.accessToken, 'SPORT');
       const travelPhotos = await fetchAllPhotos(tokens.accessToken, 'TRAVEL');
 
-      this.setState({
-        isMatchingODHWithGoogle: true
-      });
+      this.props.cachePhotos(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
 
-      const filterCriteria = mapWithAILogic(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
-
-      const activitiesId = await fetchActivitiesBy(filterCriteria);
-
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: ScreenKeys.dashboardScreen,
-          options: navigatorStandardOptions({
-            title: 'Dashboard'
-          }),
-          passProps: {
-            activitiesId
-          }
-        }
-      });
-
-      this.setState({
-        isSigninInProgress: false,
-        isLoadingPhotos: false,
-        isMatchingODHWithGoogle: false
-      });
+      await this.retrieveODHData(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
     } catch (error) {
       console.log(error);
 
@@ -143,24 +144,42 @@ class Login extends Component<ILoginProps, IState> {
     }
   };
 
-  private rerieveGoogleData = async () => {
-    // Mettere qui fetch a google
+  private retrieveODHData = async (
+    gardensPhotos: MediaItem[],
+    holidaysPhotos: MediaItem[],
+    landscapesPhotos: MediaItem[],
+    sportPhotos: MediaItem[],
+    travelPhotos: MediaItem[]
+  ) => {
+    this.setState({
+      isMatchingODHWithGoogle: true
+    });
 
-    const [error, activities] = await to(fetchActivities());
+    const filterCriteria = mapWithAILogic(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
 
-    if (activities) {
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: ScreenKeys.dashboardScreen,
-          options: navigatorStandardOptions({
-            title: 'Dashboard'
-          }),
-          passProps: {
-            activities
-          }
+    const activitiesId = await fetchActivitiesBy(filterCriteria);
+
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: ScreenKeys.dashboardScreen,
+        options: navigatorStandardOptions({
+          title: 'Dashboard'
+        }),
+        passProps: {
+          activitiesId
         }
-      });
-    }
+      }
+    });
+
+    delay(
+      () =>
+        this.setState({
+          isSigninInProgress: false,
+          isLoadingPhotos: false,
+          isMatchingODHWithGoogle: false
+        }),
+      200
+    );
   };
 }
 
@@ -179,13 +198,16 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state: RootState) {
-  return {};
+  return {
+    cachedPhotos: state.rootPath.cachedPhotos
+  };
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(
     {
-      changePath
+      changePath,
+      cachePhotos
     },
     dispatch
   );

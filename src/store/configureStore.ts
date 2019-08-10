@@ -22,9 +22,8 @@ import reducers, { RootState } from '../reducers';
 
 const persistConfig = {
     timeout: 0,
-    key: 'dic.root',
-    storage: AsyncStorage,
-    blacklist: ['documents', 'expenses', 'movements', 'payrolls']
+    key: 'instavacanza.root',
+    storage: AsyncStorage
 };
 
 const persistedReducer = persistCombineReducers<RootState>(persistConfig, reducers);
