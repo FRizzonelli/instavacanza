@@ -30,6 +30,7 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import { MediaItem } from '../../models/mediaItem';
 import LottieView from 'lottie-react-native';
+import RNPickerSelect from 'react-native-picker-select';
 
 export interface IVacationTimeProps extends ComponentEvent {
   cachedPhotos: {
@@ -82,7 +83,8 @@ class VacationTime extends Component<IVacationTimeProps, IState> {
           end={{ x: 0, y: 1 }}
           style={styles.rootLoader}
         >
-          <LottieView source={require('../../images/animation.json')} autoPlay loop />
+          {this.renderLoader()}
+
           <Text style={{ fontSize: 22, color: Colors.WHITE, marginTop: 220 }}>
             {!isMatchingODHWithGoogle ? 'Learning from your Photos...' : 'Crafting your next experience...'}
           </Text>
@@ -94,18 +96,13 @@ class VacationTime extends Component<IVacationTimeProps, IState> {
       <LinearGradient colors={['#44357F', '#3C5A99']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.root}>
         <Text style={{ fontSize: 34, color: Colors.WHITE, marginBottom: 60 }}>{'Just tell us\nwhen:'}</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Picker
-            selectedValue={this.state.pickedTime}
-            style={{ height: 38, width: 200 }}
-            itemStyle={{ color: Colors.WHITE, fontSize: 20 }}
-            onValueChange={itemValue => this.setState({ pickedTime: itemValue })}
-          >
-            <Picker.Item label="today" value="today" />
-            <Picker.Item label="tomorrow" value="tomorrow" />
-            <Picker.Item label="next week" value="nextWeek" />
-            <Picker.Item label="next month" value="nextMonth" />
-          </Picker>
-          <FeatherIcon name="chevron-down" size={20} color={Colors.WHITE} style={{ marginTop: 10 }} />
+          {this.renderPicker()}
+          <FeatherIcon
+            name="chevron-down"
+            size={20}
+            color={Colors.WHITE}
+            style={{ marginTop: Platform.select({ android: 10, ios: 6 }) }}
+          />
         </View>
 
         <PlatformTouchable
@@ -126,6 +123,46 @@ class VacationTime extends Component<IVacationTimeProps, IState> {
       </LinearGradient>
     );
   }
+
+  renderLoader = () => {
+    if (Platform.OS === 'android') {
+      return <LottieView source={require('../../images/animation.json')} autoPlay loop />;
+    }
+    return <ActivityIndicator color={Colors.WHITE} size="large" />;
+  };
+
+  renderPicker = () => {
+    if (Platform.OS === 'android') {
+      return (
+        <Picker
+          selectedValue={this.state.pickedTime}
+          style={{ height: 38, width: 200 }}
+          itemStyle={{ color: Colors.WHITE, fontSize: 20 }}
+          onValueChange={itemValue => this.setState({ pickedTime: itemValue })}
+        >
+          <Picker.Item label="today" value="today" />
+          <Picker.Item label="tomorrow" value="tomorrow" />
+          <Picker.Item label="next week" value="nextWeek" />
+          <Picker.Item label="next month" value="nextMonth" />
+        </Picker>
+      );
+    } else {
+      return (
+        <RNPickerSelect
+          value={this.state.pickedTime}
+          placeholder={{}}
+          textInputProps={{ color: Colors.WHITE, height: 38, width: 200 }}
+          onValueChange={itemValue => this.setState({ pickedTime: itemValue })}
+          items={[
+            { label: 'today', value: 'today' },
+            { label: 'tomorrow', value: 'tomorrow' },
+            { label: 'next week', value: 'nextWeek' },
+            { label: 'next month', value: 'nextMonth' }
+          ]}
+        />
+      );
+    }
+  };
 
   downloadPhoto = async () => {
     try {
