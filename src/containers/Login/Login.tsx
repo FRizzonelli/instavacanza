@@ -68,19 +68,6 @@ class Login extends Component<ILoginProps, IState> {
   }
 
   render() {
-    const { isLoadingPhotos, isMatchingODHWithGoogle } = this.state;
-
-    if (isLoadingPhotos) {
-      return (
-        <LinearGradient colors={['#44357F', '#3C5A99']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.root}>
-          <ActivityIndicator color={Colors.WHITE} />
-          <Text style={{ color: Colors.WHITE }}>
-            {!isMatchingODHWithGoogle ? 'Learning from your Photos...' : 'Crafting your next experience...'}
-          </Text>
-        </LinearGradient>
-      );
-    }
-
     return (
       <LinearGradient colors={['#44357F', '#3C5A99']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.root}>
         <View
@@ -134,21 +121,15 @@ class Login extends Component<ILoginProps, IState> {
         await GoogleSignin.signIn();
       }
 
-      this.setState({
-        isLoadingPhotos: true
+      // go to screen time
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: ScreenKeys.vacationTimeScreen,
+          options: navigatorStandardOptions({
+            title: ''
+          })
+        }
       });
-
-      const tokens = await GoogleSignin.getTokens();
-
-      const gardensPhotos = await fetchAllPhotos(tokens.accessToken, 'GARDENS');
-      const holidaysPhotos = await fetchAllPhotos(tokens.accessToken, 'HOLIDAYS');
-      const landscapesPhotos = await fetchAllPhotos(tokens.accessToken, 'LANDSCAPES');
-      const sportPhotos = await fetchAllPhotos(tokens.accessToken, 'SPORT');
-      const travelPhotos = await fetchAllPhotos(tokens.accessToken, 'TRAVEL');
-
-      this.props.cachePhotos(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
-
-      await this.retrieveODHData(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
     } catch (error) {
       console.log(error);
 
@@ -168,44 +149,6 @@ class Login extends Component<ILoginProps, IState> {
         // some other error happened
       }
     }
-  };
-
-  private retrieveODHData = async (
-    gardensPhotos: MediaItem[],
-    holidaysPhotos: MediaItem[],
-    landscapesPhotos: MediaItem[],
-    sportPhotos: MediaItem[],
-    travelPhotos: MediaItem[]
-  ) => {
-    this.setState({
-      isMatchingODHWithGoogle: true
-    });
-
-    const filterCriteria = mapWithAILogic(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
-
-    const activitiesId = await fetchActivitiesBy(filterCriteria);
-
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: ScreenKeys.dashboardScreen,
-        options: navigatorStandardOptions({
-          title: 'Dashboard'
-        }),
-        passProps: {
-          activitiesId
-        }
-      }
-    });
-
-    delay(
-      () =>
-        this.setState({
-          isSigninInProgress: false,
-          isLoadingPhotos: false,
-          isMatchingODHWithGoogle: false
-        }),
-      200
-    );
   };
 }
 
