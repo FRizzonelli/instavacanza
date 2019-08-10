@@ -1,6 +1,6 @@
 import { filter } from 'lodash';
 import React, { Component } from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet, Platform, BackHandler, NativeEventSubscription } from 'react-native';
 import { ComponentEvent, Navigation } from 'react-native-navigation';
 import { Colors } from '../../styles/colors';
 import { DEMO } from '../../models/staticEntries';
@@ -22,6 +22,7 @@ interface IState {
 
 export default class Dashboard extends Component<IDashboardProps, IState> {
   private swiper: any;
+  private backButtonSubscription?: NativeEventSubscription;
 
   constructor(props: IDashboardProps) {
     super(props);
@@ -29,6 +30,20 @@ export default class Dashboard extends Component<IDashboardProps, IState> {
       matchedActivityIds: []
     };
   }
+
+  componentDidMount() {
+    this.backButtonSubscription = BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  componentWillUnmount() {
+    if (this.backButtonSubscription) {
+      this.backButtonSubscription.remove();
+    }
+  }
+
+  handleBackButton = () => {
+    return true;
+  };
 
   render() {
     return (

@@ -1,6 +1,15 @@
 import { delay } from 'lodash';
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import {
+  ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+  Image,
+  Dimensions
+} from 'react-native';
 import { ComponentEvent, Navigation } from 'react-native-navigation';
 import { changePath, Paths, ChangePath, CachePhotos, cachePhotos } from '../../actions/rootPath';
 import { Colors } from '../../styles/colors';
@@ -49,13 +58,13 @@ class Login extends Component<ILoginProps, IState> {
   async componentDidMount() {
     const { gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos } = this.props.cachedPhotos;
 
-    if (gardensPhotos) {
-      this.setState({
-        isLoadingPhotos: true
-      });
+    // if (gardensPhotos) {
+    //   this.setState({
+    //     isLoadingPhotos: true
+    //   });
 
-      await this.retrieveODHData(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
-    }
+    //   await this.retrieveODHData(gardensPhotos, holidaysPhotos, landscapesPhotos, sportPhotos, travelPhotos);
+    // }
   }
 
   render() {
@@ -66,7 +75,7 @@ class Login extends Component<ILoginProps, IState> {
         <LinearGradient colors={['#44357F', '#3C5A99']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.root}>
           <ActivityIndicator color={Colors.WHITE} />
           <Text style={{ color: Colors.WHITE }}>
-            {!isMatchingODHWithGoogle ? 'Downloading data from your Google Photos' : 'Crafting your next experience'}
+            {!isMatchingODHWithGoogle ? 'Learning from your Photos...' : 'Crafting your next experience...'}
           </Text>
         </LinearGradient>
       );
@@ -74,14 +83,31 @@ class Login extends Component<ILoginProps, IState> {
 
     return (
       <LinearGradient colors={['#44357F', '#3C5A99']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.root}>
-        <Text style={{ color: Colors.WHITE }}>Aiutaci a raccogliere i tuoi interessi 🙂</Text>
-        <GoogleSigninButton
-          style={{ width: 192, height: 48, marginTop: 18 }}
-          size={GoogleSigninButton.Size.Wide}
-          color={GoogleSigninButton.Color.Dark}
-          onPress={this.signIn}
-          disabled={this.state.isSigninInProgress}
-        />
+        <View
+          style={{
+            borderRadius: 8,
+            backgroundColor: Colors.WHITE,
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: Dimensions.get('window').width * 0.9,
+            height: Dimensions.get('window').height * 0.6
+          }}
+        >
+          <Image source={require('../../images/logo.png')} style={{ width: 106, height: 106 }} />
+          <GoogleSigninButton
+            style={{ width: 192, height: 48, marginTop: 62 }}
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Dark}
+            onPress={this.signIn}
+            disabled={this.state.isSigninInProgress}
+          />
+          <Text style={{ fontSize: 17, color: '#44357F', marginTop: 20 }}>or</Text>
+          <PlatformTouchable>
+            <Text style={{ fontSize: 17, color: '#44357F', marginTop: 20, borderBottomWidth: 1 }}>
+              Proceed without login
+            </Text>
+          </PlatformTouchable>
+        </View>
       </LinearGradient>
     );
   }
