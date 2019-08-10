@@ -6,6 +6,7 @@ import { Colors } from './colors';
 
 export type DicOptions<T = {}> = {
     title: string;
+    visible?: boolean;
     component?: {
         id?: string;
         name: string;
@@ -19,20 +20,22 @@ export const navigatorStandardOptions = <T>(opt: DicOptions<T>, leftButtons?: Op
     return {
         statusBar: {
             style: 'light',
-            drawBehind: false
+            // drawBehind: false
         },
         // This is working but lib is bugged, https://github.com/wix/react-native-navigation/issues/5138
         topBar: {
+            visible: opt.visible,
             title: {
                 text: opt.title,
-                color: Colors.WHITE,
+                color: '#44357F',
             },
+            leftButtonColor: '#44357F',
             rightButtonColor: Colors.WHITE,
             backButton: {
-                color: Colors.WHITE
+                color: '#44357F'
             },
             background: {
-                color: Colors.FUSCHIA_500
+                color: Colors.WHITE
             },
             leftButtons,
             rightButtons

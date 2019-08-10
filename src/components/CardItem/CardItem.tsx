@@ -5,6 +5,7 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import { Colors } from '../../styles/colors';
 import { Activity } from '../../models/activity';
 import { fetchActivityById } from '../../api/activities';
+import { retrieveRandomPlaceholder } from '../../ai/photosToOdhMapper';
 
 const IS_IOS = Platform.OS === 'ios';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
@@ -64,7 +65,8 @@ export default class CardItem extends Component<ICardItemProps, IState> {
     const fullWidth = Dimensions.get('window').width;
     const imageStyle = [
       {
-        borderRadius: 8,
+        borderTopRightRadius: 8,
+        borderTopLeftRadius: 8,
         width: fullWidth - 48,
         height: 250,
         paddingBottom: 20
@@ -111,7 +113,9 @@ export default class CardItem extends Component<ICardItemProps, IState> {
           {/* IMAGE */}
           <Image
             source={
-              activity.ImageGallery.length > 0 ? activity.ImageGallery[0].ImageUrl : require('../../images/01.jpg')
+              activity.ImageGallery.length > 0
+                ? { uri: activity.ImageGallery[0].ImageUrl }
+                : { uri: retrieveRandomPlaceholder(activity.Type, activity.Id) }
             }
             style={imageStyle}
           />

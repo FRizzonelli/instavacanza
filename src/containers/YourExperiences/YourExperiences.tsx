@@ -1,6 +1,6 @@
 import { filter } from 'lodash';
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, Text, Image } from 'react-native';
+import { View, StyleSheet, FlatList, Text, Image, TextInput } from 'react-native';
 import { ComponentEvent, Navigation } from 'react-native-navigation';
 import { Colors } from '../../styles/colors';
 import FeatherIcon from 'react-native-vector-icons/Feather';
@@ -12,6 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { ScreenKeys } from '../../screens';
 import { navigatorStandardOptions } from '../../styles/navigator';
 import { fetchActivities, fetchActivityById } from '../../api/activities';
+import { retrieveRandomPlaceholder } from '../../ai/photosToOdhMapper';
 
 export interface IYourExperiencesProps extends ComponentEvent {
   matchedActivityIds: string[];
@@ -43,10 +44,13 @@ export default class YourExperiences extends Component<IYourExperiencesProps, IS
     return (
       <View style={styles.root}>
         <Text style={{ fontSize: 34, color: '#44357F', marginTop: 40, paddingHorizontal: 24 }}>Liked experiences</Text>
+        <View style={styles.searchDivider}>
+          <TextInput style={{ fontSize: 17, color: Colors.BLACK }} placeholder="Search..." />
+        </View>
         <FlatList
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => <View style={{ height: 12, width: '100%' }} />}
-          contentContainerStyle={{ marginVertical: 16, backgroundColor: Colors.WHITE }}
+          contentContainerStyle={{ backgroundColor: Colors.WHITE, paddingBottom: 16 }}
           data={this.state.activities}
           renderItem={({ item, index }) => this.renderExperienceActivity(item)}
           keyExtractor={(_, index) => String(index)}
@@ -66,21 +70,13 @@ export default class YourExperiences extends Component<IYourExperiencesProps, IS
       : '';
 
     return (
-      <View
-        style={{
-          backgroundColor: Colors.WHITE,
-          borderRadius: 8,
-          height: 190,
-          shadowOpacity: 0.05,
-          shadowRadius: 10,
-          elevation: 4,
-          marginHorizontal: 24,
-          shadowColor: Colors.BLACK,
-          shadowOffset: { height: 0, width: 0 }
-        }}
-      >
+      <View style={styles.experienceCardContainer}>
         <Image
-          source={activity.ImageGallery.length > 0 ? activity.ImageGallery[0].ImageUrl : require('../../images/01.jpg')}
+          source={
+            activity.ImageGallery.length > 0
+              ? { uri: activity.ImageGallery[0].ImageUrl }
+              : { uri: retrieveRandomPlaceholder(activity.Type, activity.Id) }
+          }
           style={{
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
@@ -107,13 +103,25 @@ export default class YourExperiences extends Component<IYourExperiencesProps, IS
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    marginTop: 40,
     backgroundColor: Colors.WHITE
   },
-  slider: {
-    marginTop: 15,
-    overflow: 'visible' // for custom animations
+  experienceCardContainer: {
+    backgroundColor: Colors.WHITE,
+    borderRadius: 8,
+    height: 190,
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 4,
+    marginHorizontal: 24,
+    shadowColor: Colors.BLACK,
+    shadowOffset: { height: 0, width: 0 }
   },
-  sliderContentContainer: {
-    paddingVertical: 10 // for custom animation
+  searchDivider: {
+    marginHorizontal: 24,
+    marginTop: 18,
+    marginBottom: 12,
+    borderBottomWidth: 1,
+    borderColor: Colors.BLACK
   }
 });

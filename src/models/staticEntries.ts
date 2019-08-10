@@ -179,3 +179,116 @@ export const DEMO = [
         image: require('../images/10.jpg')
     }
 ];
+
+export type ACTIVITY_TYPES = [
+    {
+        "Id": "Berg",
+        "Bitmask": 1,
+        "Type": "ActivityType",
+        "Parent": "",
+        "TypeDesc": {
+            "de": "Berge",
+            "en": "Mountains",
+            "it": "Montagne"
+        }
+    },
+    {
+        "Id": "Radfahren",
+        "Bitmask": 2,
+        "Type": "ActivityType",
+        "Parent": "",
+        "TypeDesc": {
+            "de": "Radfahren",
+            "en": "Cycling",
+            "it": "Ciclismo"
+        }
+    },
+    {
+        "Id": "Stadtrundgang",
+        "Bitmask": 4,
+        "Type": "ActivityType",
+        "Parent": "",
+        "TypeDesc": {
+            "de": "Ortstouren",
+            "en": "Local tours",
+            "it": "Percorsi cittadini e in paese"
+        }
+    },
+    {
+        "Id": "Pferdesport",
+        "Bitmask": 8,
+        "Type": "ActivityType",
+        "Parent": "",
+        "TypeDesc": {
+            "de": "Pferde",
+            "en": "Horses",
+            "it": "Cavalli"
+        }
+    },
+    {
+        "Id": "Wandern",
+        "Bitmask": 16,
+        "Type": "ActivityType",
+        "Parent": "",
+        "TypeDesc": {
+            "de": "Wandern",
+            "en": "Hiking",
+            "it": "Escursionismo"
+        }
+    },
+    {
+        "Id": "Laufen und Fitness",
+        "Bitmask": 32,
+        "Type": "ActivityType",
+        "Parent": "",
+        "TypeDesc": {
+            "de": "Laufen und Fitness",
+            "en": "Running and fitness",
+            "it": "Corsa e fitness"
+        }
+    },
+    {
+        "Id": "Loipen",
+        "Bitmask": 64,
+        "Type": "ActivityType",
+        "Parent": "",
+        "TypeDesc": {
+            "de": "Loipen",
+            "en": "Cross-country ski-track",
+            "it": "Piste da fondo"
+        }
+    },
+    {
+        "Id": "Rodelbahnen",
+        "Bitmask": 128,
+        "Type": "ActivityType",
+        "Parent": "",
+        "TypeDesc": {
+            "de": "Rodelbahnen",
+            "en": "Tobbogan run",
+            "it": "Piste per slitte"
+        }
+    },
+    {
+        "Id": "Piste",
+        "Bitmask": 256,
+        "Type": "ActivityType",
+        "Parent": "",
+        "TypeDesc": {
+            "de": "Pisten",
+            "en": "Slopes",
+            "it": "Piste"
+        }
+    },
+    {
+        "Id": "Aufstiegsanlagen",
+        "Bitmask": 512,
+        "Type": "ActivityType",
+        "Parent": "",
+        "TypeDesc": {
+            "de": "Aufstiegsanlagen",
+            "en": "Lifts",
+            "it": "Impianti di risalita"
+        }
+    }
+]
