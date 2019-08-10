@@ -16,9 +16,10 @@ const store = configureStore() as Store<RootState>;
 
 const initIcons = async () => {
   return new Promise((resolve, reject) => {
-    Promise.all([FeatherIcon.getImageSource('home', 24, '#fff')])
+    Promise.all([FeatherIcon.getImageSource('home', 24, '#fff'), FeatherIcon.getImageSource('x', 24, '#44357F')])
       .then(values => {
         IconStorage.saveImage('home', values[0]);
+        IconStorage.saveImage('cancel', values[1]);
         resolve(true);
       })
       .catch(error => {

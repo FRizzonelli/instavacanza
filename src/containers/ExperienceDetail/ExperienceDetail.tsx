@@ -10,10 +10,11 @@ import { CardItem } from '../../components/CardItem';
 import { Activity } from '../../models/activity';
 import LinearGradient from 'react-native-linear-gradient';
 import { ScreenKeys } from '../../screens';
-import { navigatorStandardOptions } from '../../styles/navigator';
+import { navigatorStandardOptions, leftButtonCancel } from '../../styles/navigator';
 import { fetchActivities, fetchActivityById } from '../../api/activities';
 import { retrieveRandomPlaceholder } from '../../ai/photosToOdhMapper';
 import { PlatformTouchable } from '../../components/PlatformTouchable';
+import { truncateString } from '../../utils/strUtils';
 
 export interface IExperienceDetailProps extends ComponentEvent {
   activity: Activity;
@@ -67,11 +68,26 @@ export default class ExperienceDetail extends Component<IExperienceDetailProps, 
             style={{ width: '100%', marginTop: 12 }}
             onPress={() => {
               Navigation.showModal({
-                component: {
-                  name: ScreenKeys.mapOverlayScreen,
-                  passProps: {
-                    activity
-                  }
+                stack: {
+                  children: [
+                    {
+                      component: {
+                        name: ScreenKeys.mapOverlayScreen,
+                        passProps: {
+                          activity
+                        },
+                        options: {
+                          topBar: {
+                            title: {
+                              text: truncateString(title, 20)
+                            },
+                            visible: true,
+                            leftButtons: leftButtonCancel()
+                          }
+                        }
+                      }
+                    }
+                  ]
                 }
               });
             }}

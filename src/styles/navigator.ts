@@ -167,7 +167,7 @@ export const leftButtonCancel = () => {
         ios: [
             {
                 id: NavigatorButtonIds.CANCEL,
-                color: Colors.WHITE,
+                color: '#44357F',
                 systemItem: 'cancel'
             }
         ]

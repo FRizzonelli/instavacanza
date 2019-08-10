@@ -14,6 +14,7 @@ import { navigatorStandardOptions } from '../../styles/navigator';
 import { fetchActivities, fetchActivityById } from '../../api/activities';
 import { retrieveRandomPlaceholder } from '../../ai/photosToOdhMapper';
 import { PlatformTouchable } from '../../components/PlatformTouchable';
+import { truncateString } from '../../utils/strUtils';
 
 export interface IYourExperiencesProps extends ComponentEvent {
   matchedActivityIds: string[];
@@ -78,7 +79,7 @@ export default class YourExperiences extends Component<IYourExperiencesProps, IS
             component: {
               name: ScreenKeys.experienceDetailScreen,
               options: navigatorStandardOptions({
-                title: this.truncateString(title, 20),
+                title: truncateString(title, 20),
                 visible: true
               }),
               passProps: {
@@ -117,14 +118,6 @@ export default class YourExperiences extends Component<IYourExperiencesProps, IS
       </PlatformTouchable>
     );
   };
-
-  truncateString(str: string, size: number) {
-    if (str.length > size) {
-      return str.slice(0, size) + '...';
-    } else {
-      return str;
-    }
-  }
 }
 
 const styles = StyleSheet.create({
