@@ -33,6 +33,7 @@ export const navigatorStandardOptions = <T>(opt: DicOptions<T>, leftButtons?: Op
             leftButtonColor: '#44357F',
             rightButtonColor: Colors.WHITE,
             backButton: {
+                title: 'Back',
                 color: '#44357F'
             },
             background: {

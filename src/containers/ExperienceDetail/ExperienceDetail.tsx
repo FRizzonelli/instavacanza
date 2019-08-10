@@ -1,6 +1,6 @@
 import { filter } from 'lodash';
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, Text, Image, TextInput } from 'react-native';
+import { View, StyleSheet, FlatList, Text, Image, TextInput, Platform } from 'react-native';
 import { ComponentEvent, Navigation } from 'react-native-navigation';
 import { Colors } from '../../styles/colors';
 import FeatherIcon from 'react-native-vector-icons/Feather';
@@ -100,7 +100,7 @@ export default class ExperienceDetail extends Component<IExperienceDetailProps, 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    marginTop: 40,
+    marginTop: Platform.select({ android: 40, ios: 60 }),
     paddingHorizontal: 24,
     backgroundColor: Colors.WHITE
   },

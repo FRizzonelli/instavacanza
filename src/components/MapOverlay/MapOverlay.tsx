@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { Colors } from '../../styles/colors';
 import { Activity } from '../../models/activity';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 export interface IMapOverlayProps {
   activity: Activity;

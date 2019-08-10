@@ -1,4 +1,4 @@
-import find from 'lodash';
+import { debounce } from 'lodash';
 import { Platform, Dimensions, Image, StyleSheet, TouchableOpacity, Text, View, ActivityIndicator } from 'react-native';
 import React, { Component } from 'react';
 import FeatherIcon from 'react-native-vector-icons/Feather';
@@ -61,18 +61,6 @@ export default class CardItem extends Component<ICardItemProps, IState> {
 
     const { activity } = this.state;
 
-    // Custom styling
-    const fullWidth = Dimensions.get('window').width;
-    const imageStyle = [
-      {
-        borderTopRightRadius: 8,
-        borderTopLeftRadius: 8,
-        width: fullWidth - 48,
-        height: 250,
-        paddingBottom: 20
-      }
-    ];
-
     const nameStyle = [
       {
         paddingTop: 15,
@@ -87,16 +75,16 @@ export default class CardItem extends Component<ICardItemProps, IState> {
     if (activityId && !activity) {
       return (
         <View style={styles.containerCardItem}>
-          <View style={[imageStyle, { justifyContent: 'center', alignItems: 'center' }]}>
+          <View style={[styles.imageStyle, { justifyContent: 'center', alignItems: 'center' }]}>
             <ActivityIndicator color={Colors.FUSCHIA_500} />
           </View>
           {actions && (
             <View style={styles.actionsCardItem}>
-              <TouchableOpacity style={styles.button} onPress={() => onPressLeft()}>
+              <TouchableOpacity style={[styles.button, { backgroundColor: '#EB5757' }]} onPress={() => onPressLeft()}>
                 <FeatherIcon name="thumbs-down" size={18} color={Colors.WHITE} />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.button} onPress={() => onPressRight()}>
+              <TouchableOpacity style={[styles.button, { backgroundColor: '#27AE60' }]} onPress={() => onPressRight()}>
                 <FeatherIcon name="thumbs-up" size={18} color={Colors.WHITE} />
               </TouchableOpacity>
             </View>
@@ -117,7 +105,7 @@ export default class CardItem extends Component<ICardItemProps, IState> {
                 ? { uri: activity.ImageGallery[0].ImageUrl }
                 : { uri: retrieveRandomPlaceholder(activity.Type, activity.Id) }
             }
-            style={imageStyle}
+            style={[styles.imageStyle]}
           />
 
           {/* NAME */}
@@ -135,11 +123,17 @@ export default class CardItem extends Component<ICardItemProps, IState> {
           {/* ACTIONS */}
           {actions && (
             <View style={styles.actionsCardItem}>
-              <TouchableOpacity style={styles.button} onPress={() => onPressLeft()}>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: '#EB5757' }]}
+                onPress={debounce(onPressLeft, 500, { leading: true, trailing: false })}
+              >
                 <FeatherIcon name="thumbs-down" size={18} color={Colors.WHITE} />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.button} onPress={() => onPressRight()}>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: '#27AE60' }]}
+                onPress={debounce(onPressRight, 500, { leading: true, trailing: false })}
+              >
                 <FeatherIcon name="thumbs-up" size={18} color={Colors.WHITE} />
               </TouchableOpacity>
             </View>
@@ -151,7 +145,7 @@ export default class CardItem extends Component<ICardItemProps, IState> {
     return (
       <View style={styles.containerCardItem}>
         {/* IMAGE */}
-        <Image source={image} style={imageStyle} />
+        <Image source={image} style={styles.imageStyle} />
 
         {/* MATCHES */}
         {/* {matches && (
@@ -207,6 +201,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     margin: 10,
     height: Dimensions.get('window').height - 180,
+    overflow: 'hidden',
     shadowOpacity: 0.05,
     shadowRadius: 10,
     elevation: 5,
@@ -254,5 +249,12 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     shadowColor: Colors.GRAY_500,
     shadowOffset: { height: 10, width: 0 }
+  },
+  imageStyle: {
+    borderTopRightRadius: 8,
+    borderTopLeftRadius: 8,
+    width: Dimensions.get('window').width - 48,
+    height: 250,
+    paddingBottom: 20
   }
 });

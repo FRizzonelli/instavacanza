@@ -1,6 +1,6 @@
 import { filter } from 'lodash';
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, Text, Image, TextInput } from 'react-native';
+import { View, StyleSheet, FlatList, Text, Image, TextInput, Platform } from 'react-native';
 import { ComponentEvent, Navigation } from 'react-native-navigation';
 import { Colors } from '../../styles/colors';
 import FeatherIcon from 'react-native-vector-icons/Feather';
@@ -50,7 +50,7 @@ export default class YourExperiences extends Component<IYourExperiencesProps, IS
         </View>
         <FlatList
           showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={{ height: 12, width: '100%' }} />}
+          ItemSeparatorComponent={() => <View style={{ height: 18, width: '100%' }} />}
           contentContainerStyle={{ backgroundColor: Colors.WHITE, paddingBottom: 16 }}
           data={this.state.activities}
           renderItem={({ item, index }) => this.renderExperienceActivity(item)}
@@ -88,29 +88,31 @@ export default class YourExperiences extends Component<IYourExperiencesProps, IS
           });
         }}
       >
-        <Image
-          source={
-            activity.ImageGallery.length > 0
-              ? { uri: activity.ImageGallery[0].ImageUrl }
-              : { uri: retrieveRandomPlaceholder(activity.Type, activity.Id) }
-          }
-          style={{
-            borderTopLeftRadius: 8,
-            borderTopRightRadius: 8,
-            height: 120,
-            width: '100%'
-          }}
-        />
-        <View style={{ height: 70, paddingHorizontal: 16, justifyContent: 'center' }}>
-          <Text style={{ fontSize: 17, color: Colors.BLACK }} ellipsizeMode="tail" numberOfLines={1}>
-            {title}
-          </Text>
-          {!!address && (
-            <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 4 }}>
-              <FeatherIcon name="map-pin" size={16} color={Colors.BLACK} />
-              <Text style={{ fontSize: 16, color: Colors.BLACK, paddingHorizontal: 4 }}>{address}</Text>
-            </View>
-          )}
+        <View style={{ overflow: 'hidden', borderRadius: 8 }}>
+          <Image
+            source={
+              activity.ImageGallery.length > 0
+                ? { uri: activity.ImageGallery[0].ImageUrl }
+                : { uri: retrieveRandomPlaceholder(activity.Type, activity.Id) }
+            }
+            style={{
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8,
+              height: 120,
+              width: '100%'
+            }}
+          />
+          <View style={{ height: 70, paddingHorizontal: 16, justifyContent: 'center' }}>
+            <Text style={{ fontSize: 17, color: Colors.BLACK }} ellipsizeMode="tail" numberOfLines={1}>
+              {title}
+            </Text>
+            {!!address && (
+              <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 4 }}>
+                <FeatherIcon name="map-pin" size={16} color={Colors.BLACK} />
+                <Text style={{ fontSize: 16, color: Colors.BLACK, paddingHorizontal: 4 }}>{address}</Text>
+              </View>
+            )}
+          </View>
         </View>
       </PlatformTouchable>
     );
@@ -128,19 +130,19 @@ export default class YourExperiences extends Component<IYourExperiencesProps, IS
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    marginTop: 40,
+    marginTop: Platform.select({ android: 40, ios: 60 }),
     backgroundColor: Colors.WHITE
   },
   experienceCardContainer: {
     backgroundColor: Colors.WHITE,
     borderRadius: 8,
     height: 190,
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.5,
     shadowRadius: 10,
     elevation: 4,
     marginHorizontal: 24,
     shadowColor: Colors.BLACK,
-    shadowOffset: { height: 0, width: 0 }
+    shadowOffset: { height: 2, width: 0 }
   },
   searchDivider: {
     marginHorizontal: 24,

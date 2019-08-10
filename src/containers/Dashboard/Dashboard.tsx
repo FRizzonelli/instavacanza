@@ -1,6 +1,6 @@
 import { filter } from 'lodash';
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { ComponentEvent, Navigation } from 'react-native-navigation';
 import { Colors } from '../../styles/colors';
 import { DEMO } from '../../models/staticEntries';
@@ -75,7 +75,7 @@ export default class Dashboard extends Component<IDashboardProps, IState> {
             component: {
               name: ScreenKeys.yourExperiencesScreen,
               options: navigatorStandardOptions({
-                title: 'Your Experience',
+                title: Platform.select({ ios: '', android: 'Experiences' }),
                 visible: true
               }),
               passProps: {
